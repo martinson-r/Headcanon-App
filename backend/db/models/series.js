@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Series.associate = function(models) {
     // associations can be defined here
-    Series.belongsToMany(models.Fic, { through: SeriesList});
+    Series.belongsToMany(models.Fic, { through: 'SeriesList'});
   };
   return Series;
 };

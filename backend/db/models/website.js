@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Website.associate = function(models) {
     // associations can be defined here
-    Website.belongsToMany(models.Fic, { through: LinkList });
+    Website.belongsToMany(models.Fic, { through: 'LinkList' });
   };
   return Website;
 };

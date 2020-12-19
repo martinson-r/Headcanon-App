@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Author.associate = function(models) {
     // associations can be defined here
-    Author.belongsToMany(models.Fic, {through: AuthorList});
+    Author.belongsToMany(models.Fic, {through: 'AuthorList'});
   };
   return Author;
 };

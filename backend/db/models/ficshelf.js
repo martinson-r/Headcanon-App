@@ -2,11 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const FicShelf = sequelize.define('FicShelf', {
     shelfName: DataTypes.STRING,
-    userId: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      references: { model: "Users", key: "id" },
-    },
+    userId: DataTypes.INTEGER,
     ficListId: DataTypes.INTEGER
   }, {});
   FicShelf.associate = function(models) {
