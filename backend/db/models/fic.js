@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     datePublished: DataTypes.DATE
   }, {});
   Fic.associate = function(models) {
-    Fic.belongsToMany(models.Website, {through: 'LinkList'});
-    Fic.belongsToMany(models.Author, {through: 'AuthorList'});
+    Fic.belongsToMany(models.Website, {through: 'LinkList', foreignKey: 'ficId', otherKey: 'websiteId'});
+    Fic.belongsToMany(models.Author, {through: 'AuthorList', foreignKey: 'ficId', otherKey: 'authorId'});
     Fic.belongsToMany(models.User, {through: 'FicShelf'});
     Fic.belongsToMany(models.Series, {through: 'FicList'});
     Fic.hasMany(models.Review, {foreignKey: "ficId"});
