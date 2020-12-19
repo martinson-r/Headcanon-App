@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Fic, Author, AuthorList } = require('../../db/models');
+const { User, Fic, Author, Website, AuthorList, LinkList } = require('../../db/models');
 const authorlist = require('../../db/models/authorlist');
 
 const router = express.Router();
@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.get('/', asyncHandler(async(req, res) => {
     const fetchFics = await Fic.findAll({
-       include: Author, through: { AuthorList, attributes: ['authorName'] }
+       include: [Author, Website]
     });
     console.log(fetchFics);
     return res.json(fetchFics);
