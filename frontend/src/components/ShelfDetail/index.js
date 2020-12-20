@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getOneShelf } from "../../store/shelves";
@@ -11,9 +11,6 @@ const ShelfDetail = () => {
     const fics = useSelector(state => state.shelves.ficlist.data)
     console.log('ficsstate', fics);
     console.log('shelf?', shelf);
-    if (shelf) {
-
-    }
 
     useEffect(() => {
         dispatch(getOneShelf(shelfId));
@@ -26,7 +23,7 @@ const ShelfDetail = () => {
         <div>
             <h2>{shelf.shelfName}</h2>
 
-            {fics.Fics.map((fic) => <p>{fic.title}</p>)}
+            {fics.Fics.map((fic) => <Link to={`/fics/${fic.id}`}><p>{fic.title}</p></Link>)}
 
         </div>
     );
