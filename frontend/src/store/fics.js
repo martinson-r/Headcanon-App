@@ -59,6 +59,7 @@ const load = list => ({
             ...state,
             [action.fic.data.id]: action.fic.data
           };
+          //for sorting, later
           // const ficList = newState.list.map(id => newState[id]);
           // ficList.push(action.fic);
           //newState.list = sortList(ficList);

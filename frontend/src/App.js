@@ -25,15 +25,14 @@ function App() {
           {/* <Route path="/login" >
             <LoginFormPage />
           </Route> */}
-          <Route exact path="/">
+          <Route
+          path={["/", "/fics/:ficId", "/shelves/:shelfId"]}
+          exact>
             <HomePage />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/fics/:ficId">
-          <FicDetail/>
-        </Route>
         </Switch>
       )}
     </>

@@ -29,12 +29,13 @@ router.get('/', asyncHandler(async(req, res) => {
 
 router.get('/:id', asyncHandler(async(req, res) => {
     const id = req.params.id;
-    const fetchFics = await Fic.findOne({
+    console.log(id);
+    const fetchSingleFic = await Fic.findOne({
         where: { id },
        include: [Author, Website]
     });
-    console.log(fetchFics);
-    return res.json(fetchFics);
+    console.log(fetchSingleFic);
+    return res.json(fetchSingleFic);
 }))
 
 

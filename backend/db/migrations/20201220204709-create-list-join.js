@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('FicLists', {
+    return queryInterface.createTable('ListJoins', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,17 +10,11 @@ module.exports = {
       },
       ficId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: { model: "Fics", key: "id" },
       },
-      privateStatus: {
-        type: Sequelize.BOOLEAN
-      },
-      readStatus: {
-        type: Sequelize.BOOLEAN
-      },
-      dateRead: {
-        type: Sequelize.DATEONLY
+      ficListId: {
+        type: Sequelize.INTEGER,
+        references: { model: "FicLists", key: "id" },
       },
       createdAt: {
         allowNull: false,
@@ -31,10 +25,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
-      }
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('FicLists');
+    return queryInterface.dropTable('ListJoins');
   }
 };

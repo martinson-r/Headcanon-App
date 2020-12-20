@@ -7,10 +7,11 @@ module.exports = {
 
     return queryInterface.bulkInsert( 'FicLists', [
       {
-        ficId: 1,
         privateStatus: false,
         readStatus: false,
         dateRead: '2020-01-03',
+        userId: 1,
+        listName: "Naruto stuff",
       },
     ],
     {});

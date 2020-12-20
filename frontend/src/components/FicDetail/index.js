@@ -23,8 +23,9 @@ const FicDetail = () => {
             <p>{fic.title}</p>
             <p>Published: {fic.datePublished}</p>
             <p>Authors: {fic.Authors.map((author) => author.authorName)}</p>
+            {fic.Websites.map((website) => <p>{website.LinkList.link}</p>)}
             <p>{fic.synopsis}</p>
         </div>
     );
 }
-export default FicDetail
+export default FicDetail;

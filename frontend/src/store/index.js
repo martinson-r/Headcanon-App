@@ -2,10 +2,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session'
 import fics from './fics';
+import shelves from './shelves';
 
 const rootReducer = combineReducers({
   session,
-  fics
+  fics,
+  shelves
 });
 
 let enhancer;
