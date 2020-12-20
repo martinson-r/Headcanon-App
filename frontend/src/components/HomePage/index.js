@@ -1,8 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getFics } from "../../store/fics";
-import { NavLink, Route } from "react-router-dom";
-import FicDetail from "../FicDetail";
+import { NavLink } from "react-router-dom";
 
 const HomePage = () => {
     const dispatch = useDispatch();

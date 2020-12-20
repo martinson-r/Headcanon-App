@@ -5,14 +5,13 @@ import { getOneFic } from "../../store/fics";
 
 const FicDetail = () => {
     const dispatch = useDispatch();
-    const {ficId} = useParams();
-    console.log(ficId);
+    const { ficId } = useParams();
+    console.log('ficId', ficId);
     const fic = useSelector(state => state.fics[ficId]);
     console.log('fic?', fic);
     console.log('FicDetail', fic);
 
     useEffect(() => {
-        console.log('useeffect');
         dispatch(getOneFic(ficId));
       }, [dispatch, ficId]);
 

@@ -25,11 +25,10 @@ const load = list => ({
   };
 
   export const getOneFic = (id) => async dispatch => {
-    const oneFic = await fetch(`/api/fics/${id}`);
-    console.log("Fetch single fic");
+    const oneFic = await fetch(`/api/fics/${id.toString()}`);
+    console.log('oneFic', oneFic);
 
     if (oneFic.ok) {
-      console.log('OneFic', oneFic);
       dispatch(loadSingle(oneFic));
     }
   };
@@ -54,23 +53,24 @@ const load = list => ({
         };
       }
       case ADD_OR_LOAD_SINGLE: {
-        if (!state[action.fic.id]) {
-          const singleFic = {
+        console.log('action fic id', action.fic.data.id);
+        if (!state[action.fic.data.id]) {
+          const newState = {
             ...state,
-            [action.fic.id]: action.fic
+            [action.fic.data.id]: action.fic.data
           };
-          const ficList = singleFic.list.map(id => singleFic.id);
-          ficList.push(action.fic);
-          singleFic.list = ficList;
-          return singleFic;
+          // const ficList = newState.list.map(id => newState[id]);
+          // ficList.push(action.fic);
+          //newState.list = sortList(ficList);
+          return newState;
         }
         return {
           ...state,
           //before I can retrieve the fic, it has to be added to the state in the first place
-          //remember that state is immutable, even when you are just
-          [action.fic.id]: {
-            ...state[action.fic.id],
-            ...action.fic,
+          //remember that state is immutable
+          [action.fic.data.id]: {
+            ...state[action.fic.data.id],
+            ...action.fic.data,
           }
         };
       }

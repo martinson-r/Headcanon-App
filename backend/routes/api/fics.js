@@ -27,6 +27,16 @@ router.get('/', asyncHandler(async(req, res) => {
     return res.json(fetchFics);
 }))
 
+router.get('/:id', asyncHandler(async(req, res) => {
+    const id = req.params.id;
+    const fetchFics = await Fic.findOne({
+        where: { id },
+       include: [Author, Website]
+    });
+    console.log(fetchFics);
+    return res.json(fetchFics);
+}))
+
 
 
 
