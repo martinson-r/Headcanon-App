@@ -16,6 +16,7 @@ const AddShelf = () => {
         }
         dispatch(createShelf(payload));
 
+        //How do I send them to shelves/:shelfid? This doesn't work.
         let createdShelf;
         console.log('createdShelf', createdShelf)
         if (createdShelf) {

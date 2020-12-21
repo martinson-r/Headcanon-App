@@ -1,8 +1,9 @@
 import { fetch } from './csrf.js';
 
-const LOAD_USER_SHELF = "./shelves/LOAD_USER_SHELF";
-const LOAD_USER_BOOKS = "./shelves/LOAD_USER_BOOKS";
-const ADD_SHELF = "./shelves/ADD_SHELF"
+export const LOAD_USER_SHELF = "./shelves/LOAD_USER_SHELF";
+export const LOAD_USER_BOOKS = "./shelves/LOAD_USER_BOOKS";
+export const ADD_SHELF = "./shelves/ADD_SHELF";
+export const UPDATE_SHELF = "./shelves/UPDATE_SHELF";
 
 // This is confusing, but this is the main bookshelf that contains all the ficlists of books
   const loadAllBooks = ficlist => ({
@@ -19,7 +20,12 @@ const loadMainShelf = shelf => ({
   const addOneShelf = shelf => ({
       type: ADD_SHELF,
       shelf,
-  })
+  });
+
+  const update = (shelf) => ({
+    type: UPDATE_SHELF,
+    shelf,
+  });
 
   export const getShelf = () => async dispatch => {
     const shelf = await fetch(`/api/shelves`);
@@ -53,6 +59,18 @@ const loadMainShelf = shelf => ({
 
   }
 
+  export const editShelf = (data) => async dispatch => {
+    const { ficId, listName } = data;
+    const response = await fetch(`/api/fics/${ficId.toString()}/addtoshelf`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ficId, listName
+      })
+    });
+    dispatch(update(response));
+  }
+
   const initialState = {
     shelf: [],
     ficlist: [],
@@ -77,6 +95,7 @@ const loadMainShelf = shelf => ({
         console.log('Add shelf');
         if (!state[action.shelf.data.id]) {
             console.log("Action data", action.shelf.data)
+            console.log("Action id", action.shelf.data.id)
             console.log("Action shelf", action.shelf)
             const newState = {
               ...state,
@@ -111,6 +130,12 @@ const loadMainShelf = shelf => ({
         ...state,
         ficlist: action.ficlist,
       };
+      }
+      case UPDATE_SHELF: {
+        return {
+          ...state,
+          [action.shelf.data.id]: action.shelf.data,
+        };
       }
       default:
         return state;

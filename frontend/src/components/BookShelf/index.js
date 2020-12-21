@@ -19,8 +19,8 @@ const BookShelf = () => {
     return (
         <div>
             <p>SHELVES</p>
-            {shelves.map((shelf) => <p>
-                <Link key={shelf.id} to={`/shelves/${shelf.id}`}>{shelf.listName}</Link>
+            {shelves.map((shelf) => <p key={shelf.id}>
+                <Link to={`/shelves/${shelf.id}`}>{shelf.listName}</Link>
                 </p>)}
                 <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
         </div>
