@@ -21,8 +21,8 @@ const ShelfDetail = () => {
     }
     return (
         <div>
+            <p>FICS ON THIS SHELF</p>
             <h2>{shelf.shelfName}</h2>
-
             {fics.Fics.map((fic) => <Link to={`/fics/${fic.id}`}><p>{fic.title}</p></Link>)}
 
         </div>

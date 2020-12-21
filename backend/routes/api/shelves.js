@@ -25,13 +25,26 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
 
 router.get('/:id', requireAuth, asyncHandler(async(req, res) => {
     const id = req.params.id;
-    console.log(id);
     const fetchSingleShelf = await FicList.findOne({
         where: { id },
         include: [Fic]
     });
     console.log(fetchSingleShelf);
     return res.json(fetchSingleShelf);
+}))
+
+router.post('/create', requireAuth, asyncHandler(async(req, res) => {
+    const {listName } = req.body;
+    const { user } = req;
+    const userId = user.id;
+    const newList = await FicList.build( {
+        listName,
+        userId,
+        privateStatus: false,
+        readStatus: false,
+        });
+    await newList.save();
+    return res.json(newList);
 }))
 
 module.exports = router;

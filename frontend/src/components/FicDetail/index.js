@@ -20,6 +20,7 @@ const FicDetail = () => {
     }
     return (
         <div>
+            <p>FIC DETAILS</p>
             <p>{fic.title}</p>
             <p>Published: {fic.datePublished}</p>
             <p>Authors: {fic.Authors.map((author) => author.authorName)}</p>

@@ -2,6 +2,7 @@ import { fetch } from './csrf.js';
 
 const LOAD_USER_SHELF = "./shelves/LOAD_USER_SHELF";
 const LOAD_USER_BOOKS = "./shelves/LOAD_USER_BOOKS";
+const ADD_SHELF = "./shelves/ADD_SHELF"
 
 // This is confusing, but this is the main bookshelf that contains all the ficlists of books
   const loadAllBooks = ficlist => ({
@@ -14,6 +15,11 @@ const loadMainShelf = shelf => ({
     type: LOAD_USER_SHELF,
     shelf,
   });
+
+  const addOneShelf = shelf => ({
+      type: ADD_SHELF,
+      shelf,
+  })
 
   export const getShelf = () => async dispatch => {
     const shelf = await fetch(`/api/shelves`);
@@ -32,6 +38,20 @@ const loadMainShelf = shelf => ({
       dispatch(loadAllBooks(oneShelf));
     }
   };
+
+  export const createShelf = (payload) => async dispatch => {
+        const { listName } = payload;
+
+        const response = await fetch(`/api/shelves/create`, {
+            method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      listName
+                    }),
+                  });
+                  dispatch(addOneShelf(response));
+
+  }
 
   const initialState = {
     shelf: [],
@@ -53,34 +73,37 @@ const loadMainShelf = shelf => ({
           shelf: action.shelf,
         };
       }
-      case LOAD_USER_BOOKS: {
-        // console.log('Load user books');
-        // console.log('ficlist state', action.ficlist.data.Fics);
-        // console.log('fic id', action.ficlist.data.Fics.id);
-        // console.log('action shelf', action.ficlist.data.id);
-        // if (!state[action.ficlist.data.Fics.id]) {
-        //   const newState = {
-        //     ...state,
-        //     [action.ficlist.data.Fics.id]: action.ficlist.Fics
-        //   };
-        //   //for sorting, later
-        //   // const ficficList = newState.ficlist.map(id => newState[id]);
-        //   // ficficList.push(action.fic);
-        //   //newState.ficlist = sortficList(ficficList);
-        //   return newState;
-        // }
-        // return {
-        //   ...state,
-        //   //before I can retrieve the fic, it has to be added to the state in the first place
-        //   //remember that state is immutable
-        //   [action.ficlist.data.Fics.id]: {
-        //     ...state[action.ficlist.data.Fics.id],
-        //     ...action.ficlist.data.Fics,
-        //   }
-        // };
+      case ADD_SHELF: {
+        console.log('Add shelf');
+        if (!state[action.shelf.data.id]) {
+            console.log("Action data", action.shelf.data)
+            console.log("Action shelf", action.shelf)
+            const newState = {
+              ...state,
+              [action.shelf.data.id]: action.shelf.data
+            };
+            console.log('New State', newState);
+            const shelfList = newState.shelf.data.map(item => newState[item.id]);
+            console.log('New State 2', newState)
+            console.log('Shelf List', shelfList);
+            shelfList.push(action.shelf.data);
+            newState.shelf.data = shelfList;
+            return newState;
+          }
+          return {
+            ...state,
+            //before I can retrieve the shelf, it has to be added to the state in the first place
+            //remember that state is immutable, even when you are just
+            [action.shelf.data.id]: {
+              ...state[action.shelf.data.id],
+              ...action.shelf.data,
+            }
+          };
 
+      }
+      case LOAD_USER_BOOKS: {
         const allFics = {};
-      action.ficlist.data.Fics.forEach(fic => {
+        action.ficlist.data.Fics.forEach(fic => {
         allFics[fic.id] = fic;
       });
       return {
