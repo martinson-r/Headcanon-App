@@ -27,9 +27,19 @@ router.get('/', asyncHandler(async(req, res) => {
     return res.json(fetchFics);
 }))
 
-router.get('/:id', asyncHandler(async(req, res) => {
+router.delete('/:id', asyncHandler(async(req, res) => {
+    const {ficId, listId} = req.body;
+    console.log('ficId', ficId)
+    const fetchFicToRemove = await ListJoin.findOne({
+        where: { ficId,
+                ficListId: listId },
+    });
+    await fetchFicToRemove.destroy();
+    return res.json("Fic removed");
+}))
+
+router.delete('/:id', asyncHandler(async(req, res) => {
     const id = req.params.id;
-    console.log(id);
     const fetchSingleFic = await Fic.findOne({
         where: { id },
        include: [Author, Website]
@@ -70,6 +80,7 @@ router.post('/:id/addtoshelf', requireAuth, asyncHandler(async(req, res) => {
     });
     res.json(updatedList);
 }))
+
 
 
 

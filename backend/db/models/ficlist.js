@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   FicList.associate = function(models) {
     // associations can be defined here
     //FicList.belongsTo(models.FicShelf, { foreignKey: "ficShelfId"});
-    FicList.belongsToMany(models.Fic, { through: "ListJoin", foreignKey: "ficListId", otherKey: "ficId"});
+    FicList.belongsToMany(models.Fic, { through: "ListJoin", foreignKey: "ficListId", otherKey: "ficId", onDelete: 'cascade', hooks:true});
 
   };
   return FicList;

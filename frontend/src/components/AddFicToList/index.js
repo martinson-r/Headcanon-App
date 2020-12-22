@@ -38,11 +38,6 @@ const AddFicToList = ({fic}) => {
 
         dispatch(editShelf(payload));
 
-        // let updatedShelf;
-        // if (updatedShelf) {
-        //   history.push(`/shelves/${updateShelf.id}`);
-        // }
-
       };
 
 
@@ -50,6 +45,7 @@ const AddFicToList = ({fic}) => {
         <form onSubmit={handleSubmit}>
             <p>Placeholder</p>
             <select onChange={updateShelfName} value={listName}>
+                <option></option>
             {shelves.map(shelfName =>
             <option key={shelfName.listName}>{shelfName.listName}</option>
             )}

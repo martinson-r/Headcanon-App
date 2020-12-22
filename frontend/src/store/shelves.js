@@ -4,6 +4,7 @@ export const LOAD_USER_SHELF = "./shelves/LOAD_USER_SHELF";
 export const LOAD_USER_BOOKS = "./shelves/LOAD_USER_BOOKS";
 export const ADD_SHELF = "./shelves/ADD_SHELF";
 export const UPDATE_SHELF = "./shelves/UPDATE_SHELF";
+export const DELETE_SHELF = "./shelves/DELETE_SHELF";
 
 // This is confusing, but this is the main bookshelf that contains all the ficlists of books
   const loadAllBooks = ficlist => ({
@@ -25,6 +26,11 @@ const loadMainShelf = shelf => ({
   const update = (shelf) => ({
     type: UPDATE_SHELF,
     shelf,
+  });
+
+  const remove = (listId) => ({
+    type: DELETE_SHELF,
+    listId,
   });
 
   export const getShelf = () => async dispatch => {
@@ -58,6 +64,20 @@ const loadMainShelf = shelf => ({
                   dispatch(addOneShelf(response));
 
   }
+
+ export const deleteShelf = (payload) => async dispatch => {
+    const { shelfId } = payload;
+    const id = shelfId;
+
+    const response = await fetch(`/api/shelves/${id.toString()}`, {
+        method: 'DELETE',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  id
+                }),
+              });
+              dispatch(remove(id));
+}
 
   export const editShelf = (data) => async dispatch => {
     const { ficId, listName } = data;
@@ -94,17 +114,11 @@ const loadMainShelf = shelf => ({
       case ADD_SHELF: {
         console.log('Add shelf');
         if (!state[action.shelf.data.id]) {
-            console.log("Action data", action.shelf.data)
-            console.log("Action id", action.shelf.data.id)
-            console.log("Action shelf", action.shelf)
             const newState = {
               ...state,
               [action.shelf.data.id]: action.shelf.data
             };
-            console.log('New State', newState);
             const shelfList = newState.shelf.data.map(item => newState[item.id]);
-            console.log('New State 2', newState)
-            console.log('Shelf List', shelfList);
             shelfList.push(action.shelf.data);
             newState.shelf.data = shelfList;
             return newState;
@@ -136,6 +150,19 @@ const loadMainShelf = shelf => ({
           ...state,
           [action.shelf.data.id]: action.shelf.data,
         };
+      }
+      case DELETE_SHELF: {
+        const newState = { ...state, shelves: { ...state.shelves } };
+        const listId = action.listId;
+        console.log('listId', listId)
+        console.log('newstate', newState)
+        delete newState[action.listId];
+        console.log('listId', action.listId)
+        console.log('newState data', newState.shelf.data)
+        newState.shelf.data.map(item => console.log('Item id 2', item.id))
+        newState.shelf.data = newState.shelf.data.filter(item => item.id !== parseInt(listId));
+        console.log('newstate data', newState.shelf.data);
+        return newState;
       }
       default:
         return state;

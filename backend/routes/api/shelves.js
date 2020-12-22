@@ -33,6 +33,20 @@ router.get('/:id', requireAuth, asyncHandler(async(req, res) => {
     return res.json(fetchSingleShelf);
 }))
 
+router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
+    const id = req.params.id;
+    const fetchListJoin = await ListJoin.findOne({
+        where: { ficListId: id },
+    });
+    const fetchSingleShelf = await FicList.findByPk(id);
+
+    if (fetchListJoin) {
+        await fetchListJoin.destroy();
+    }
+    await fetchSingleShelf.destroy();
+    return res.json('ListJoin and shelf deleted');
+}))
+
 router.post('/create', requireAuth, asyncHandler(async(req, res) => {
     const {listName } = req.body;
     const { user } = req;

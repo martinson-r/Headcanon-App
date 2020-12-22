@@ -4,6 +4,8 @@ const LOAD = "./fics/LOAD";
 
 const ADD_OR_LOAD_SINGLE = "./fics/ADD_OR_LOAD_SINGLE";
 
+const DELETE_FIC = "./fics/DELETE_FIC";
+
 const load = list => ({
     type: LOAD,
     list,
@@ -11,6 +13,11 @@ const load = list => ({
 
   const loadSingle = fic => ({
     type: ADD_OR_LOAD_SINGLE,
+    fic,
+  })
+
+  const remove = fic => ({
+    type: DELETE_FIC,
     fic,
   })
 
@@ -26,12 +33,25 @@ const load = list => ({
 
   export const getOneFic = (id) => async dispatch => {
     const oneFic = await fetch(`/api/fics/${id.toString()}`);
-    console.log('oneFic', oneFic);
 
     if (oneFic.ok) {
       dispatch(loadSingle(oneFic));
     }
   };
+
+  export const deleteFicFromShelf = (payload) => async dispatch => {
+    const {ficId, listId} = payload;
+    console.log('ficId', ficId)
+    await fetch(`/api/fics/${ficId.toString()}`, {
+      method: 'DELETE',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ficId,
+                listId
+              }),
+            });
+            dispatch(remove(ficId));
+  }
 
   const initialState = {
     list: [],
@@ -74,6 +94,9 @@ const load = list => ({
             ...action.fic.data,
           }
         };
+      }
+      case DELETE_FIC: {
+        const newState = { ...state }
       }
       default:
         return state;
