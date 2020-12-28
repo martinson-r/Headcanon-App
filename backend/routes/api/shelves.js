@@ -3,12 +3,12 @@ const { check } = require('express-validator');
 const asyncHandler = require('express-async-handler');
 
 const { handleValidationErrors } = require('../../utils/validation');
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { User, Review, Fic, Author, Website, FicShelf, FicList, ListJoin, AuthorList, LinkList } = require('../../db/models');
 
 const router = express.Router();
 
-router.get('/', requireAuth, asyncHandler(async(req, res) => {
+router.get('/', restoreUser, asyncHandler(async(req, res) => {
     const {user} = req;
     const userId = user.id;
     console.log('USER OBJECT NOW', userId);
@@ -23,7 +23,7 @@ router.get('/', requireAuth, asyncHandler(async(req, res) => {
 
 }));
 
-router.get('/:id', requireAuth, asyncHandler(async(req, res) => {
+router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const fetchSingleShelf = await FicList.findOne({
         where: { id },
@@ -37,7 +37,7 @@ router.get('/:id', requireAuth, asyncHandler(async(req, res) => {
     return res.json(fetchSingleShelf);
 }))
 
-router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
+router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const fetchListJoin = await ListJoin.findOne({
         where: { ficListId: id },
@@ -51,7 +51,7 @@ router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
     return res.json('ListJoin and shelf deleted');
 }))
 
-router.post('/create', requireAuth, asyncHandler(async(req, res) => {
+router.post('/create', restoreUser, asyncHandler(async(req, res) => {
     const {listName } = req.body;
     const { user } = req;
     const userId = user.id;
