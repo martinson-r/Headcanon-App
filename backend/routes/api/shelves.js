@@ -11,16 +11,12 @@ const router = express.Router();
 router.get('/', restoreUser, asyncHandler(async(req, res) => {
     const {user} = req;
     const userId = user.id;
-    console.log('USER OBJECT NOW', userId);
     if (user) {
         const fetchShelves = await FicList.findAll({
             where: { userId },
         });
-
-        console.log('FETCH SHELVES', fetchShelves);
         return res.json(fetchShelves);
     }
-
 }));
 
 router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
@@ -37,7 +33,7 @@ router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
     return res.json(fetchSingleShelf);
 }))
 
-router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
+router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const fetchListJoin = await ListJoin.findOne({
         where: { ficListId: id },
@@ -51,7 +47,7 @@ router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
     return res.json('ListJoin and shelf deleted');
 }))
 
-router.post('/create', restoreUser, asyncHandler(async(req, res) => {
+router.post('/create', requireAuth, asyncHandler(async(req, res) => {
     const {listName } = req.body;
     const { user } = req;
     const userId = user.id;
