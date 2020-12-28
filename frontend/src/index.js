@@ -13,20 +13,14 @@ import { restoreCSRF, fetch } from './store/csrf';
 import * as sessionActions from './store/session';
 
 const store = configureStore();
+restoreCSRF();
 
 if (process.env.NODE_ENV !== "production") {
-  restoreCSRF();
 
   window.csrfFetch = fetch;
   window.store = store;
   window.sessionActions = sessionActions;
 }
-
-// const Carrot = () => (
-//   <div style={{ color: "orange", fontSize: "100px" }}>
-//     <i className="fas fa-carrot"></i>
-//   </div>
-// );
 
 function Root() {
   return (
