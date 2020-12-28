@@ -13,10 +13,9 @@ import { restoreCSRF, fetch } from './store/csrf';
 import * as sessionActions from './store/session';
 
 const store = configureStore();
-restoreCSRF();
 
 if (process.env.NODE_ENV !== "production") {
-
+  restoreCSRF();
   window.csrfFetch = fetch;
   window.store = store;
   window.sessionActions = sessionActions;
