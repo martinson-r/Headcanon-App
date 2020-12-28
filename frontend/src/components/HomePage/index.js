@@ -26,7 +26,7 @@ const HomePage = () => {
         <Route exact path="/">
             <p>LATEST FICS</p>
             {fics.map((fic) => {
-              return(<NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}</NavLink>)
+              return(<NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}<br /></NavLink>)
           })}
         </Route>
         <Route path="/fics/:ficId">
