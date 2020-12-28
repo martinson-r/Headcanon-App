@@ -6,9 +6,12 @@ import { getShelf } from "../../store/shelves";
 const BookShelf = () => {
     const dispatch = useDispatch();
     const shelves = useSelector(state => state.shelves.shelf.data);
+    const sessionUser = useSelector((state) => state.session.user);
 
     useEffect(() => {
-        dispatch(getShelf());
+        if (sessionUser) {
+            dispatch(getShelf());
+        }
       }, [dispatch]);
 
       if (!shelves) {

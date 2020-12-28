@@ -8,7 +8,6 @@ module.exports = {
     return queryInterface.bulkInsert('LinkLists', [
       {
         link: 'www.whatever.com',
-        websiteId: 1,
         ficId: 1,
       },
     ],

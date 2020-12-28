@@ -1,4 +1,5 @@
 import { fetch } from './csrf.js';
+import { ADD_SHELF } from './shelves.js';
 
 const LOAD = "./fics/LOAD";
 
@@ -6,10 +7,17 @@ const ADD_OR_LOAD_SINGLE = "./fics/ADD_OR_LOAD_SINGLE";
 
 const DELETE_FIC = "./fics/DELETE_FIC";
 
+const ADD_FIC = "./fics/ADD_FIC";
+
 const load = list => ({
     type: LOAD,
     list,
   });
+
+  const add = fic => ({
+    type: ADD_FIC,
+    fic,
+  })
 
   const loadSingle = fic => ({
     type: ADD_OR_LOAD_SINGLE,
@@ -34,10 +42,11 @@ const load = list => ({
   export const getOneFic = (id) => async dispatch => {
     const oneFic = await fetch(`/api/fics/${id.toString()}`);
 
+    console.log('oneFic', oneFic);
     if (oneFic.ok) {
       dispatch(loadSingle(oneFic));
     }
-  };
+  }
 
   export const deleteFicFromShelf = (payload) => async dispatch => {
     const {ficId, listId} = payload;
@@ -51,6 +60,45 @@ const load = list => ({
               }),
             });
             dispatch(remove(ficId));
+  }
+
+  export const addFic = (payload) => async dispatch => {
+    const {title, authorName, link, synopsis} = payload;
+    const response = await fetch(`/api/fics/create`, {
+      method: 'POST',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                title,
+                authorName,
+                link,
+                synopsis
+              }),
+            });
+            dispatch(add(response));
+  }
+
+  export const markRead = (payload) => async dispatch => {
+    const { id, readStatus } = payload;
+    const response = await fetch(`/api/fics/${id.toString()}/edit`, {
+      method: 'PUT',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                readStatus: true
+              }),
+            });
+            dispatch(loadSingle(response));
+  }
+
+  export const markUnread = (payload) => async dispatch => {
+    const { id, readStatus } = payload;
+    const response = await fetch(`/api/fics/${id.toString()}/edit`, {
+      method: 'PUT',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                readStatus: false
+              }),
+            });
+            dispatch(loadSingle(response));
   }
 
   const initialState = {

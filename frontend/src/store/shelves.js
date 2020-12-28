@@ -37,14 +37,14 @@ const loadMainShelf = shelf => ({
     const shelf = await fetch(`/api/shelves`);
 
     if (shelf.ok) {
-      console.log(shelf);
+
       dispatch(loadMainShelf(shelf));
     }
   };
 
   export const getOneShelf = (id) => async dispatch => {
     const oneShelf = await fetch(`/api/shelves/${id.toString()}`);
-    console.log('getOneShelf', oneShelf);
+ 
 
     if (oneShelf.ok) {
       dispatch(loadAllBooks(oneShelf));
@@ -100,7 +100,7 @@ const loadMainShelf = shelf => ({
   const shelfReducer= (state = initialState, action) => {
     switch (action.type) {
       case LOAD_USER_SHELF: {
-          console.log('Load user shelf');
+
         const allShelves = {};
         action.shelf.data.forEach(shelf => {
           allShelves[shelf.id] = shelf;
@@ -112,7 +112,7 @@ const loadMainShelf = shelf => ({
         };
       }
       case ADD_SHELF: {
-        console.log('Add shelf');
+
         if (!state[action.shelf.data.id]) {
             const newState = {
               ...state,
@@ -154,14 +154,10 @@ const loadMainShelf = shelf => ({
       case DELETE_SHELF: {
         const newState = { ...state, shelves: { ...state.shelves } };
         const listId = action.listId;
-        console.log('listId', listId)
-        console.log('newstate', newState)
         delete newState[action.listId];
-        console.log('listId', action.listId)
-        console.log('newState data', newState.shelf.data)
-        newState.shelf.data.map(item => console.log('Item id 2', item.id))
+
         newState.shelf.data = newState.shelf.data.filter(item => item.id !== parseInt(listId));
-        console.log('newstate data', newState.shelf.data);
+
         return newState;
       }
       default:

@@ -1,20 +1,21 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('LinkLists', {
+    return queryInterface.createTable('ReadJoins', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      link: {
-        type: Sequelize.STRING
+      readId: {
+        type: Sequelize.INTEGER
       },
       ficId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: "Fics", key: "id" },
+        type: Sequelize.INTEGER
+      },
+      userId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +30,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('LinkLists');
+    return queryInterface.dropTable('ReadJoins');
   }
 };

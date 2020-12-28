@@ -6,6 +6,7 @@ import FicDetail from "../FicDetail";
 import BookShelf from "../BookShelf";
 import ShelfDetail from "../ShelfDetail";
 import AddShelf from "../AddShelf";
+import AddFicToDatabase from "../AddFicToDatabase";
 
 const HomePage = () => {
     const dispatch = useDispatch();

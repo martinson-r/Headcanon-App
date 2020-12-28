@@ -14,6 +14,22 @@ const ShelfDetail = () => {
     console.log('ficsstate', fics);
     console.log('shelf?', shelf);
 
+    const calculateAverage = () => {
+        if (fics) {
+            const reviews = fics.Fics.map(fic => fic.Reviews);
+            console.log('reviews', reviews)
+            const mappedReviews = reviews[0].map(eachreview => eachreview.rating);
+            console.log('mapped reviews', mappedReviews);
+            let total = 0
+            for(let i = 0; i < mappedReviews.length; i++) {
+                total += mappedReviews[i];
+            }
+            let average = total / mappedReviews.length;
+            return average;
+            }
+
+    }
+
     useEffect(() => {
         dispatch(getOneShelf(shelfId));
       }, [dispatch, shelfId]);
@@ -33,7 +49,7 @@ const ShelfDetail = () => {
             <p>FICS ON THIS SHELF</p>
             <h2>{shelf.shelfName}</h2>
             <form onSubmit={handleSubmit}><button type="submit">Remove This Shelf</button></form>
-            {fics.Fics.map((fic) => <div><p><Link key={fic.id} to={`/fics/${fic.id}`}>{fic.title}</Link></p><DeleteFicFromShelf fic={fic} listId={shelfId}/></div>)}
+            {fics.Fics.map((fic) => <div key={fic.id}><p><Link key={fic.id} to={`/fics/${fic.id}`}>{fic.title}</Link> Rating: {calculateAverage()}</p><DeleteFicFromShelf fic={fic} listId={shelfId}/></div>)}
             {/* Add logic so button does not appear on Read/Unread shelves, which should not be deletable */}
 
         </div>

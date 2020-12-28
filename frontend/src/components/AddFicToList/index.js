@@ -1,30 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
 import { getShelf, editShelf } from "../../store/shelves";
 
 const AddFicToList = ({fic}) => {
-    //const { ficId } = useParams();
-    const ficId = fic.id;
-    const dispatch = useDispatch();
-    const shelves = useSelector(state => state.shelves.shelf.data);
-    console.log('shelves', shelves);
-    const [listName, setListName] = useState(shelves);
-    //const [shelf, setShelf] = useState(shelf.shelfName);
-    const updateShelfName = (e) => setListName(e.target.value);
-    console.log('List name', listName);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getShelf());
+  }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(getShelf());
-      }, [dispatch]);
+    const ficId = fic.id;
+
+    const updateShelfName = (e) => setListName(e.target.value);
+      const shelves = useSelector(state => state.shelves.shelf.data);
+      console.log('shelves', shelves)
+      const [listName, setListName] = useState(shelves);
+      console.log('List name', listName);
 
       useEffect(() => {
+
+        if (!shelves) {
+          return null;
+        }
+
         if (shelves.length && !listName) {
-          setListName(listName[0]);
+          setListName(shelves[0].listName);
         }
       }, [listName, shelves]);
 
 
+      if (!shelves) {
+        return null;
+      }
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,8 +39,6 @@ const AddFicToList = ({fic}) => {
           listName,
           ficId
         };
-
-        console.log('Payload, front end', payload);
 
         dispatch(editShelf(payload));
 
@@ -45,8 +49,8 @@ const AddFicToList = ({fic}) => {
         <form onSubmit={handleSubmit}>
             <p>Placeholder</p>
             <select onChange={updateShelfName} value={listName}>
-                <option></option>
-            {shelves.map(shelfName =>
+                <option>Select a shelf:</option>
+            {shelves.length && shelves.map(shelfName =>
             <option key={shelfName.listName}>{shelfName.listName}</option>
             )}
              </select>

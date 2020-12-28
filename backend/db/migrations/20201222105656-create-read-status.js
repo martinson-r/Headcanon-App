@@ -1,15 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Websites', {
+    return queryInterface.createTable('ReadStatuses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      websiteName: {
-        type: Sequelize.STRING
+      readStatus: {
+        type: Sequelize.BOOLEAN
+      },
+      privateStatus: {
+        type: Sequelize.BOOLEAN
+      },
+      dateRead: {
+        type: Sequelize.DATE
+      },
+      dateAdded: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -24,6 +33,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Websites');
+    return queryInterface.dropTable('ReadStatuses');
   }
 };
