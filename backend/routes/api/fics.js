@@ -13,7 +13,9 @@ router.get('/', asyncHandler(async(req, res) => {
         const { user } = req;
 
         const fetchFics = await Fic.findAll({
-            include: [Author, LinkList, Review, ListJoin]
+            include: [Author, LinkList, {model: Review, include:
+                User
+             }, ListJoin]
          });
          return res.json(fetchFics);
 
@@ -50,8 +52,11 @@ router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
     const userId = user.id;
     const fetchFicToFind = await Fic.findOne({
         where: { id },
-       include: [ LinkList, Review, Author, ListJoin ]
+       include: [ LinkList, {model: Review, include:
+           User
+        } , Author, ListJoin ]
     });
+    console.log('FICS GET CALLED');
     return res.json(fetchFicToFind);
 }))
 

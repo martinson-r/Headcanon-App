@@ -11,6 +11,8 @@ const FicDetail = () => {
     const sessionUser = useSelector((state) => state.session.user);
     const fic = useSelector(state => state.fics[ficId]);
 
+    console.log('FIC REVIEWS', fic.Reviews)
+
     console.log('FIC NOW', fic);
 
     const [readStatus, setReadStatus] = useState(false);
@@ -38,7 +40,7 @@ const FicDetail = () => {
             <AddFicToList fic={fic} />
             <p>Reviews:</p>
             <AddReview fic={fic}/>
-            {fic.Reviews && fic.Reviews.map(review => <p key={review.id}>{review.review}</p>)}
+            {fic.Reviews && fic.Reviews.map(review => <div key={review.id}><p>{review.User.username}: {review.rating} stars</p><p>"{review.review}"</p></div>)}
 
         </div>
     );
