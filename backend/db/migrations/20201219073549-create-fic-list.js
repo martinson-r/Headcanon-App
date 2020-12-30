@@ -8,15 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      listName: {
-        type: Sequelize.STRING
-      },
       privateStatus: {
         type: Sequelize.BOOLEAN
+      },
+      ficShelfId: {
+        type: Sequelize.INTEGER,
+        references: { model: "FicShelves", key: "id" },
       },
       readStatus: {
         type: Sequelize.BOOLEAN

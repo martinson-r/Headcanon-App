@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFic } from "../../store/fics"
+import { useHistory } from "react-router-dom";
 
 const AddFicToDatabase = () => {
     const [title, setTitle] = useState('');
     const [authorName, setAuthorName] = useState('');
     const [link, setLink] = useState('');
     const [synopsis, setSynopsis] = useState('');
+    const history = useHistory();
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateAuthorName = (e) => setAuthorName(e.target.value);
@@ -25,8 +27,7 @@ const AddFicToDatabase = () => {
             synopsis
         }
 
-        console.log( 'payload', payload
-        )
+        history.push('/');
 
 dispatch(addFic(payload));
 

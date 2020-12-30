@@ -18,10 +18,8 @@ const AddShelf = () => {
 
         //How do I send them to shelves/:shelfid? This doesn't work.
         let createdShelf;
-        console.log('createdShelf', createdShelf)
         if (createdShelf) {
-            console.log('createdShelf 2', createdShelf)
-            //history.push(`/shelves/${createdShelf.data.id}`);
+            history.push(`/shelves/${createdShelf.id}`);
         }
 
     }

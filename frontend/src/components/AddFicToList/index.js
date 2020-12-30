@@ -7,25 +7,22 @@ const AddFicToList = ({fic}) => {
   useEffect(() => {
     dispatch(getShelf());
   }, [dispatch]);
-
     const ficId = fic.id;
 
-    const updateShelfName = (e) => setListName(e.target.value);
-      const shelves = useSelector(state => state.shelves.shelf.data);
-      console.log('shelves', shelves)
-      const [listName, setListName] = useState(shelves);
-      console.log('List name', listName);
+    const updateShelfName = (e) => setshelfName(e.target.value);
+      const shelves = useSelector(state => state.shelves.shelf);
+      const [shelfName, setshelfName] = useState(shelves);
 
       useEffect(() => {
 
-        if (!shelves) {
+        if (!shelves.length) {
           return null;
         }
 
-        if (shelves.length && !listName) {
-          setListName(shelves[0].listName);
+        if (shelves.length && !shelfName) {
+          setshelfName(shelves[0].shelfName);
         }
-      }, [listName, shelves]);
+      }, [shelfName, shelves]);
 
 
       if (!shelves) {
@@ -36,7 +33,7 @@ const AddFicToList = ({fic}) => {
         e.preventDefault();
 
         const payload = {
-          listName,
+          shelfName,
           ficId
         };
 
@@ -48,10 +45,10 @@ const AddFicToList = ({fic}) => {
      return (
         <form onSubmit={handleSubmit}>
             <p>Placeholder</p>
-            <select onChange={updateShelfName} value={listName}>
+            <select onChange={updateShelfName} value={shelfName}>
                 <option>Select a shelf:</option>
-            {shelves.length && shelves.map(shelfName =>
-            <option key={shelfName.listName}>{shelfName.listName}</option>
+            {shelves.length && shelves.map(shelf =>
+            <option key={shelf.shelfName}>{shelf.shelfName}</option>
             )}
              </select>
         <button type="submit">Add To Shelf</button>

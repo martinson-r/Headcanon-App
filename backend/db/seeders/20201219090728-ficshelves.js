@@ -8,9 +8,7 @@ module.exports = {
     return queryInterface.bulkInsert( 'FicShelves', [
       {
         shelfName: 'Naruto Stuff',
-        ficListId: 1,
         userId: 1,
-        ficListId: 1,
       },
     ],
     {});

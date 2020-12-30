@@ -6,7 +6,6 @@ import HomePage from "./components/HomePage";
 // import LoginFormPage from "./components/LoginFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import FicDetail from "./components/FicDetail";
 
 function App() {
   const dispatch = useDispatch();

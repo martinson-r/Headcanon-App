@@ -10,8 +10,7 @@ module.exports = {
         privateStatus: false,
         readStatus: false,
         dateRead: '2020-01-03',
-        userId: 1,
-        listName: "Naruto stuff",
+        ficShelfId: 1,
       },
     ],
     {});

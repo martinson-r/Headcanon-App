@@ -3,46 +3,42 @@ const { check } = require('express-validator');
 const asyncHandler = require('express-async-handler');
 
 const { handleValidationErrors } = require('../../utils/validation');
-const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Fic, ReadStatus, ReadJoin, Author, Review, AuthorList, FicList, ListJoin, LinkList } = require('../../db/models');
+const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { User, Fic, FicShelf, ReadStatus, ReadJoin, Author, Review, AuthorList, FicList, ListJoin, LinkList } = require('../../db/models');
 const authorlist = require('../../db/models/authorlist');
 
 const router = express.Router();
 
-router.get('/', restoreUser, asyncHandler(async(req, res) => {
-    // const { user } = req;
-    // if (user) {
-    //     const userId = user.id;
-    //     const fetchFics = await Fic.findAll({
-    //         include: [Author, {model: ReadStatus, where: {userId} }, LinkList, Review]
-    //      });
-    //      console.log(fetchFics);
-    //      return res.json(fetchFics);
-    // }
+router.get('/', asyncHandler(async(req, res) => {
+        const { user } = req;
 
-    const { user } = req;
-
-    if (user !== undefined ) {
-        const userId = user.id;
-        console.log("HIT USER PATH");
         const fetchFics = await Fic.findAll({
             include: [Author, LinkList, Review]
          });
-         console.log(fetchFics);
          return res.json(fetchFics);
-    }
-    const fetchFics = await Fic.findAll({
-        include: [Author, LinkList, Review]
-     });
-     console.log(fetchFics);
-     return res.json(fetchFics);
+
+
+    // if (user !== undefined ) {
+    //     const userId = user.id;
+    //     const fetchFics = await Fic.findAll({
+    //         include: [Author, LinkList, Review]
+    //      });
+    //      return res.json(fetchFics);
+    // }
+    // const fetchFics = await Fic.findAll({
+    //     include: [Author, LinkList, Review]
+    //  });
+
+    //  return res.json(fetchFics);
 }))
 
-router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
+router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
     const {ficId, listId} = req.body;
+
     const fetchFicToRemove = await ListJoin.findOne({
-        where: { ficId,
-                ficListId: listId },
+        where: {
+                ficListId: listId,
+                ficId },
     });
     await fetchFicToRemove.destroy();
     return res.json("Fic removed");
@@ -51,26 +47,22 @@ router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
 router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const { user } = req;
-    console.log('USER', user)
     const userId = user.id;
-    console.log('USERID', userId)
     const fetchFicToFind = await Fic.findOne({
         where: { id },
-       include: [Author, LinkList, Review, { model: ReadStatus, through: { model: ReadJoin, where: {userId}}}]
+       include: [ LinkList, Review, Author ]
     });
     return res.json(fetchFicToFind);
 }))
 
-router.put('/:id/edit', asyncHandler(async(req, res) => {
+router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const { user } = req;
     const userId = user.id;
     const { readStatus } = req.body;
-    const fetchFicToUpdate = await Fic.findOne({
-        where: { id },
-       include: [Author, LinkList, ReadStatus]
+    const fetchFicToUpdate = await ListJoin.findOne({
+        where: { ficId: id },
     });
-    console.log(fetchFicToUpdate);
 
     if (fetchFicToUpdate) {
         await fetchFicToUpdate.update({
@@ -80,53 +72,59 @@ router.put('/:id/edit', asyncHandler(async(req, res) => {
     return res.json(fetchFicToUpdate);
 }))
 
-router.post('/:id/addtoshelf', requireAuth, asyncHandler(async(req, res) => {
+router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
-    const {listName, ficId } = req.body;
-    console.log(listName);
+    const {shelfName, ficId } = req.body;
     const { user } = req;
     const userId = user.id;
-    const listToUpdate = await FicList.findOne( {
+    const shelfToUpdate = await FicShelf.findOne( {
         where: {
-            listName,
+            shelfName,
             userId,
         }
         });
-    const ficListId = listToUpdate.id;
+    const ficShelfId = shelfToUpdate.id;
     const ficToAdd = await Fic.findByPk(ficId);
 
-    if (ficListId && ficToAdd) {
-       const newListEntry =  await ListJoin.build({
-                ficId,
-                ficListId,
-        });
+    if (ficShelfId && ficToAdd ) {
+        const newListEntry =  await FicList.build({
+            ficShelfId: ficShelfId,
+            ficId: ficId,
+            readStatus: false,
+            privateStatus: false
+    });
         await newListEntry.save();
-    }
 
-    const addReadStatus = await ReadStatus.build({
-        readStatus: false,
-        privateStatus: false,
-     });
-     await addReadStatus.save();
+        const getListId = await FicList.findOne({
+            where: {
+                ficShelfId: ficShelfId
+            }
+        });
 
-     const addReadJoin = await ReadJoin.build({
-         userId,
-         listId,
-         ficId
-     });
-     await addReadJoin.save();
 
-    const updatedList = await FicList.findOne({
+        const newFicListId = getListId.id;
+
+        const newListJoin = await ListJoin.build({
+            ficListId: newFicListId,
+            ficShelfId,
+            ficId,
+            userId
+        });
+
+        await newListJoin.save();
+
+        const ficListId = newListEntry.id;
+        const updatedList = await FicList.findAll({
         where: {
-            id: ficListId
+            ficShelfId
         }
     });
     res.json(updatedList);
+    }
+
 }));
 
-router.post('/create', requireAuth, asyncHandler(async(req, res) => {
-    const { user } = req;
-    const userId = user.id;
+router.post('/create', asyncHandler(async(req, res) => {
     const { authorName, link, title, synopsis } = req.body;
     const ficToAddToDatabase = await Fic.build({link, title, synopsis,
     Authors: {authorName},

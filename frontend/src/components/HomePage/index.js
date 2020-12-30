@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getFics } from "../../store/fics";
-import { NavLink, Route, useHistory } from "react-router-dom";
+import { NavLink, Route, Switch, useHistory } from "react-router-dom";
 import FicDetail from "../FicDetail";
 import BookShelf from "../BookShelf";
 import ShelfDetail from "../ShelfDetail";
@@ -10,19 +10,19 @@ import AddFicToDatabase from "../AddFicToDatabase";
 
 const HomePage = () => {
     const dispatch = useDispatch();
-    const fics = useSelector(state => state.fics.list.data);
-    console.log('FICS', fics);
+    const fics = useSelector(state => state.fics.list);
 
     useEffect(() => {
       dispatch(getFics());
     }, [dispatch]);
 
-    if (!fics) {
+    if (!fics.length) {
       return null;
     }
     return (
         <div>
-        <BookShelf />
+          <BookShelf />
+
         <Route exact path="/">
             <p>LATEST FICS</p>
             {fics.map((fic) => {
@@ -41,6 +41,8 @@ const HomePage = () => {
         <Route path="/fic/add">
           <AddFicToDatabase />
         </Route>
+       
+
         </div>
 
     )

@@ -1,4 +1,4 @@
-import { fetch } from './csrf.js';
+import Cookies from 'js-cookie';
 
 export const LOAD_USER_SHELF = "./shelves/LOAD_USER_SHELF";
 export const LOAD_USER_BOOKS = "./shelves/LOAD_USER_BOOKS";
@@ -34,19 +34,18 @@ const loadMainShelf = shelf => ({
   });
 
   export const getShelf = () => async dispatch => {
-    const shelf = await fetch(`/api/shelves`);
+    const res = await fetch(`/api/shelves`);
 
-    if (shelf.ok) {
-
+    if (res.ok) {
+      const shelf = await res.json();
       dispatch(loadMainShelf(shelf));
     }
   };
 
   export const getOneShelf = (id) => async dispatch => {
-    const oneShelf = await fetch(`/api/shelves/${id.toString()}`);
- 
-
-    if (oneShelf.ok) {
+    const res = await fetch(`/api/shelves/${id.toString()}`);
+    if (res.ok) {
+      const oneShelf = await res.json();
       dispatch(loadAllBooks(oneShelf));
     }
   };
@@ -56,12 +55,15 @@ const loadMainShelf = shelf => ({
 
         const response = await fetch(`/api/shelves/create`, {
             method: 'POST',
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
                     body: JSON.stringify({
                       listName
                     }),
                   });
-                  dispatch(addOneShelf(response));
+        if (response.ok) {
+            const createShelf = await response.json();
+            dispatch(addOneShelf(createShelf));
+        }
 
   }
 
@@ -71,7 +73,7 @@ const loadMainShelf = shelf => ({
 
     const response = await fetch(`/api/shelves/${id.toString()}`, {
         method: 'DELETE',
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
                 body: JSON.stringify({
                   id
                 }),
@@ -80,67 +82,61 @@ const loadMainShelf = shelf => ({
 }
 
   export const editShelf = (data) => async dispatch => {
-    const { ficId, listName } = data;
-    const response = await fetch(`/api/fics/${ficId.toString()}/addtoshelf`, {
+    const { ficId, shelfName } = data;
+    const res = await fetch(`/api/fics/${ficId.toString()}/addtoshelf`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",  "XSRF-Token": Cookies.get('XSRF-TOKEN') },
       body: JSON.stringify({
-        ficId, listName
+        ficId, shelfName
       })
     });
-    dispatch(update(response));
+    if (res.ok) {
+      const updateShelf = await res.json();
+      dispatch(update(updateShelf));
+    }
   }
 
   const initialState = {
     shelf: [],
-    ficlist: [],
-    types: []
+    ficlist: []
   };
 
   const shelfReducer= (state = initialState, action) => {
     switch (action.type) {
       case LOAD_USER_SHELF: {
-
-        const allShelves = {};
-        action.shelf.data.forEach(shelf => {
-          allShelves[shelf.id] = shelf;
-        });
-        return {
-          ...allShelves,
-          ...state,
-          shelf: action.shelf,
-        };
+      const allShelves = {};
+      action.shelf.forEach((shelf) => {
+        allShelves[shelf.id] = shelf;
+      });
+       return {
+         ...allShelves,
+         ...state,
+         shelf: action.shelf
+       }
       }
       case ADD_SHELF: {
 
-        if (!state[action.shelf.data.id]) {
+        if (!state[action.shelf.id]) {
             const newState = {
               ...state,
-              [action.shelf.data.id]: action.shelf.data
+              [action.shelf.id]: action.shelf
             };
-            const shelfList = newState.shelf.data.map(item => newState[item.id]);
-            shelfList.push(action.shelf.data);
-            newState.shelf.data = shelfList;
+            const shelfList = newState.shelf.map(item => newState[item.id]);
+            shelfList.push(action.shelf);
+            newState.shelf = shelfList;
             return newState;
           }
           return {
             ...state,
-            //before I can retrieve the shelf, it has to be added to the state in the first place
-            //remember that state is immutable, even when you are just
-            [action.shelf.data.id]: {
-              ...state[action.shelf.data.id],
-              ...action.shelf.data,
+            [action.shelf.id]: {
+              ...state[action.shelf.id],
+              ...action.shelf,
             }
           };
 
       }
       case LOAD_USER_BOOKS: {
-        const allFics = {};
-        action.ficlist.data.Fics.forEach(fic => {
-        allFics[fic.id] = fic;
-      });
       return {
-        ...allFics,
         ...state,
         ficlist: action.ficlist,
       };
@@ -148,7 +144,7 @@ const loadMainShelf = shelf => ({
       case UPDATE_SHELF: {
         return {
           ...state,
-          [action.shelf.data.id]: action.shelf.data,
+          [action.shelf.id]: action.shelf,
         };
       }
       case DELETE_SHELF: {
@@ -156,7 +152,7 @@ const loadMainShelf = shelf => ({
         const listId = action.listId;
         delete newState[action.listId];
 
-        newState.shelf.data = newState.shelf.data.filter(item => item.id !== parseInt(listId));
+        newState.shelf = newState.shelf.filter(item => item.id !== parseInt(listId));
 
         return newState;
       }

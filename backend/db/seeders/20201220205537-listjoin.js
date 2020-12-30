@@ -3,8 +3,13 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
       return queryInterface.bulkInsert('ListJoins', [{
-        ficId: 1,
         ficListId: 1,
+        ficShelfId: 1,
+        ficId: 1,
+        userId: 1,
+        privateStatus: false,
+        readStatus: false,
+        dateRead: '2020-01-01'
       }], {});
   },
 

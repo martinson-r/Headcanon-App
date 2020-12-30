@@ -16,11 +16,6 @@ module.exports = {
         allowNull: false,
         references: { model: "Users", key: "id" },
       },
-      ficListId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: "FicLists", key: "id" },
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

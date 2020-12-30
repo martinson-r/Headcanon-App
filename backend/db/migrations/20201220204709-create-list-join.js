@@ -8,13 +8,30 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: { model: "Users", key: "id" },
+      },
       ficId: {
         type: Sequelize.INTEGER,
         references: { model: "Fics", key: "id" },
       },
+      ficShelfId: {
+        type: Sequelize.INTEGER,
+        references: { model: "FicShelves", key: "id" },
+      },
       ficListId: {
         type: Sequelize.INTEGER,
         references: { model: "FicLists", key: "id" },
+      },
+      privateStatus: {
+        type: Sequelize.BOOLEAN
+      },
+      readStatus: {
+        type: Sequelize.BOOLEAN
+      },
+      dateRead: {
+        type: Sequelize.DATEONLY
       },
       createdAt: {
         allowNull: false,

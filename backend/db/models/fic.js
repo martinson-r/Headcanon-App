@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Fic.associate = function(models) {
     Fic.belongsToMany(models.Author, {through: 'AuthorList', foreignKey: 'ficId', otherKey: 'authorId'});
+    // Fic.hasMany(models.ListJoin, { foreignKey: { name: "ficId", allowNull: true},});
     Fic.belongsToMany(models.FicList, { through: "ListJoin", foreignKey: "ficId", otherKey: "ficListId"});
-    Fic.belongsToMany(models.ReadStatus, { through: "ReadJoin", foreignKey: "ficId", otherKey: "readId"});
     Fic.hasMany(models.Review, {foreignKey: "ficId",});
     Fic.hasMany(models.LinkList, {foreignKey: "ficId",});
     // associations can be defined here

@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getOneFic, markRead, markUnread } from "../../store/fics";
@@ -8,27 +8,22 @@ const FicDetail = () => {
     const dispatch = useDispatch();
     const { ficId } = useParams();
     const sessionUser = useSelector((state) => state.session.user);
-    console.log('ficId', ficId);
     const fic = useSelector(state => state.fics[ficId]);
-    console.log('FIC', fic);
+
+    const [readStatus, setReadStatus] = useState(false);
+
+
+
+    // This results in infinite loop? Why?
+    // if (fic.ReadStatuses !== undefined && fic.ReadStatuses[0].readStatus) {
+    //     setReadStatus(fic.ReadStatuses[0].readStatus);
+    // }
+
     useEffect(() => {
         dispatch(getOneFic(ficId));
       }, [dispatch, ficId]);
 
-
-    const [readStatus, setReadStatus] = useState('');
-
-    console.log('read status preset', readStatus);
-
-    // This results in infinite loop? Why?
-    // if (fic.ReadStatuses !== undefined && fic.ReadStatuses[0].readStatus) {
-    //     console.log('READ STATUS', fic.ReadStatuses[0].readStatus )
-    //     setReadStatus(fic.ReadStatuses[0].readStatus);
-    //     console.log('read status postset', readStatus);
-    // }
-
     const handleClick = async (e) => {
-        console.log(readStatus);
         e.preventDefault();
         setReadStatus(!readStatus);
     }
