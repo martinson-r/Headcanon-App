@@ -75,9 +75,6 @@ router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
        include: [ LinkList, Review, Author, ListJoin ]
     });
     return res.json(fetchFicToFind);
-
-    // console.log('FETCHFICTORETURN*****', fetchFicToReturn)
-    // return res.json(fetchFicToReturn);
 }))
 
 router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {

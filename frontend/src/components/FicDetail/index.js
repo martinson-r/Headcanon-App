@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getOneFic, markRead, markUnread } from "../../store/fics";
 import AddFicToList from "../AddFicToList";
+import AddReview from "../AddReview";
 
 const FicDetail = () => {
     const dispatch = useDispatch();
@@ -41,22 +42,9 @@ const FicDetail = () => {
             <p>{fic.synopsis}</p>
             <AddFicToList fic={fic} />
             <p>Reviews:</p>
+            <AddReview fic={fic}/>
             {fic.Reviews.map(review => <p key={review.id}>{review.review}</p>)}
-            {/* {(fic.ReadStatuses !== undefined) && fic.ReadStatuses[0].readStatus && (
-                <div><p>Read</p>
-                <form onSubmit={handleClick}>
-                    <input type="radio" value={readStatus} hidden></input>
-                    <button type="submit">Mark Unread</button></form>
-                </div>
-            )}{(fic.ReadStatuses !== undefined) && !fic.ReadStatuses[0].readStatus && (
-                <div>
-                    <p>Unread</p>
-                    <form onSubmit={handleClick}>
-                        <input type="radio" value={readStatus} hidden></input>
-                        <button type="submit">Mark Read</button></form>
-                </div>
 
-            )} */}
         </div>
     );
 }

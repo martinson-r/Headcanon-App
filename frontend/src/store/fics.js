@@ -78,7 +78,6 @@ const load = list => ({
             });
             dispatch(add(response));
             const addedFic = response.json();
-            return addedFic;
   }
 
   export const toggleReadStatus = (payload) => async dispatch => {
@@ -96,6 +95,22 @@ const load = list => ({
               dispatch(loadSingle(singleFic));
             }
 
+  }
+
+  export const addReview = (payload) => async dispatch => {
+    const { review, rating, id } = payload;
+    const res = await fetch(`/api/reviews/${id.toString()}/addreview`, {
+      method: 'POST',
+              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              body: JSON.stringify({
+                review,
+                rating,
+              }),
+            });
+            if (res.ok) {
+              const singleFic = await res.json();
+              dispatch(loadSingle(singleFic));
+            }
   }
 
   const initialState = {

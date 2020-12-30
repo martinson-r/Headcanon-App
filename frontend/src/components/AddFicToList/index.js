@@ -44,7 +44,6 @@ const AddFicToList = ({fic}) => {
 
      return (
         <form onSubmit={handleSubmit}>
-            <p>Placeholder</p>
             <select onChange={updateShelfName} value={shelfName}>
                 <option>Select a shelf:</option>
             {shelves.length && shelves.map(shelf =>
