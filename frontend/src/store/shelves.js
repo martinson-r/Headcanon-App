@@ -144,7 +144,7 @@ const loadMainShelf = shelf => ({
       case UPDATE_SHELF: {
         return {
           ...state,
-          [action.shelf.id]: action.shelf,
+          ficlist: action.shelf,
         };
       }
       case DELETE_SHELF: {

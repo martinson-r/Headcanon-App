@@ -5,8 +5,9 @@ import { toggleReadStatus } from "../../store/fics";
 import { getOneShelf } from "../../store/shelves";
 
 const UpdateReadStatus = ({fic}) => {
+    console.log('FIC NOW', fic)
     //Should I be doing this with useState?
-    const thisFicsReadStatus = useSelector(state => state.fics[fic.id].ListJoins[0].readStatus)
+    const thisFicsReadStatus = fic.ListJoin.readStatus
     const [readStatus, setReadStatus] = useState(thisFicsReadStatus);
     const dispatch = useDispatch();
     const { shelfId } = useParams();

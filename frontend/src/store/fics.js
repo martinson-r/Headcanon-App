@@ -6,8 +6,6 @@ const ADD_OR_LOAD_SINGLE = "./fics/ADD_OR_LOAD_SINGLE";
 
 const DELETE_FIC = "./fics/DELETE_FIC";
 
-const ADD_FIC = "./fics/ADD_FIC";
-
 const TOGGLE_READ_STATUS = "./fics/TOGGLE_READ_STATUS";
 
 const load = list => ({
@@ -20,10 +18,10 @@ const load = list => ({
     fic,
   })
 
-  const add = fic => ({
-    type: ADD_FIC,
-    fic,
-  })
+  // const add = fic => ({
+  //   type: ADD_FIC,
+  //   fic,
+  // })
 
   const loadSingle = fic => ({
     type: ADD_OR_LOAD_SINGLE,
@@ -65,7 +63,7 @@ const load = list => ({
   }
 
   export const addFic = (payload) => async dispatch => {
-    const {title, authorName, link, synopsis} = payload;
+    const { title, authorName, link, synopsis } = payload;
     const response = await fetch(`/api/fics/create`, {
       method: 'POST',
               headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
@@ -76,8 +74,12 @@ const load = list => ({
                 synopsis
               }),
             });
-            dispatch(add(response));
-            const addedFic = response.json();
+            if (response.ok) {
+              const singleFic = await response.json();
+              // console.log('Current single fic', singleFic)
+              dispatch(loadSingle(singleFic));
+            }
+
   }
 
   export const toggleReadStatus = (payload) => async dispatch => {
@@ -132,11 +134,11 @@ const load = list => ({
        }
       }
       case ADD_OR_LOAD_SINGLE: {
-        console.log('action fic', action.fic);
         if (!state[action.fic.id]) {
           const newState = {
             ...state,
-            [action.fic.id]: action.fic
+            [action.fic.id]: action.fic,
+            list: [...state.list, action.fic]
           };
           return newState;
         }
@@ -147,7 +149,7 @@ const load = list => ({
           [action.fic.id]: {
             ...state[action.fic.id],
             ...action.fic,
-          }
+          },
         };
       }
       case DELETE_FIC: {

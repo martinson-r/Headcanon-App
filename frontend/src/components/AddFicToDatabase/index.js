@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFic } from "../../store/fics"
 import { useHistory } from "react-router-dom";
+import { getShelf } from "../../store/shelves";
 
 const AddFicToDatabase = () => {
     const [title, setTitle] = useState('');
@@ -9,6 +10,21 @@ const AddFicToDatabase = () => {
     const [link, setLink] = useState('');
     const [synopsis, setSynopsis] = useState('');
     const history = useHistory();
+    const ficState = useSelector(state => state.fics);
+    const lastTitle = ficState.list[ficState.list.length-1].title;
+
+    useEffect(() => {
+        if (lastTitle === title) {
+            console.log('IT matches!');
+            const id = ficState.list[ficState.list.length-1].id;
+            history.push(`/fics/${id}`)
+        }
+    },[ficState])
+    // console.log('FICSTATE', ficState)
+
+    // console.log('LAST ITEM', ficState.list[ficState.list.length-1].title);
+
+    // const match = ficState.list.find(el => console.log('MATCH?',  el.title === title ));
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateAuthorName = (e) => setAuthorName(e.target.value);
@@ -26,14 +42,10 @@ const AddFicToDatabase = () => {
             link,
             synopsis
         }
-        // history.push('/');
 
-let ficData = dispatch(addFic(payload));
-console.log(ficData);
-        if (ficData) {
-            history.push(`/fics/${ficData.id}`)
-        }
-    }
+        dispatch(addFic(payload))
+
+            }
 
     return (
         <div>

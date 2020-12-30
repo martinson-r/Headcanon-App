@@ -113,20 +113,26 @@ router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {
             ficListId: newFicListId,
             ficShelfId,
             ficId,
-            userId
+            userId,
+            readStatus: false,
+            privateStatus: false,
         });
 
         await newListJoin.save();
 
-        const ficListId = newListEntry.id;
-        const updatedList = await FicList.findAll({
-        where: {
-            ficShelfId
-        }
-    });
-    res.json(updatedList);
-    }
+        // const ficListId = newListEntry.id;
+        // const updatedList = await FicList.findAll({
+        // where: {
+        //     ficShelfId
+        // }
 
+        const updatedList = await FicList.findAll({
+            where: { ficShelfId },
+            include: { model: Fic, through: [ListJoin], include: [Review, { model: Author, through: [AuthorList]}]},
+        })
+        console.log('UPDATED LIST RESPONDING');
+        res.json(updatedList);
+    }
 }));
 
 router.post('/create', asyncHandler(async(req, res) => {
@@ -135,10 +141,11 @@ router.post('/create', asyncHandler(async(req, res) => {
     Authors: { authorName },
     LinkLists: { link },
     }, {
-        include: [ Author, LinkList ]
+        include: [ Author, LinkList, ListJoin ]
       });
       await ficToAddToDatabase.save();
       res.json(ficToAddToDatabase);
+      console.log('CREATE RESPONDING', ficToAddToDatabase)
 }));
 
 

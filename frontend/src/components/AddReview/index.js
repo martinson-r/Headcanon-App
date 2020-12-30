@@ -7,6 +7,7 @@ const AddReview = ({fic}) => {
     const id = fic.id;
     const [rating, setRating] = useState(5);
     const [review, setReview] = useState('');
+    const [showForm, setShowForm] = useState(false);
 
     const updateRating = (e) => setRating(e.target.value);
     const updateReview = (e) => setReview(e.target.value);

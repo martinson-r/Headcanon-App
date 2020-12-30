@@ -12,6 +12,8 @@ const ShelfDetail = () => {
     const shelf = useSelector(state => state.shelves[shelfId]);
     const fics = useSelector(state => state.shelves.ficlist[0]);
 
+    console.log('FICS SHELF DETAIL', fics)
+
 
     useEffect(() => {
         dispatch(getOneShelf(shelfId));
@@ -32,7 +34,6 @@ const ShelfDetail = () => {
                 <p>It looks like there aren't any fics on this shelf! Better get going!</p>
                 <form onSubmit={handleSubmit}><button type="submit">Remove This Shelf</button></form>
             </div>
-
         )
     }
 
