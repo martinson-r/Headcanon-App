@@ -15,7 +15,7 @@ const BookShelf = () => {
       }, [dispatch]);
 
       if (!shelves.length) {
-          return null;
+          return <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
 
       }
 

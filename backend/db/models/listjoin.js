@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   ListJoin.associate = function(models) {
     ListJoin.belongsTo(models.FicShelf, { foreignKey: "ficShelfId" });
+    ListJoin.belongsTo(models.Fic, { foreignKey: "ficId"});
     // associations can be defined here
   };
   return ListJoin;

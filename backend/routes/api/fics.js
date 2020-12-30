@@ -13,7 +13,7 @@ router.get('/', asyncHandler(async(req, res) => {
         const { user } = req;
 
         const fetchFics = await Fic.findAll({
-            include: [Author, LinkList, Review]
+            include: [Author, LinkList, Review, ListJoin]
          });
          return res.json(fetchFics);
 
@@ -50,7 +50,7 @@ router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
     const userId = user.id;
     const fetchFicToFind = await Fic.findOne({
         where: { id },
-       include: [ LinkList, Review, Author ]
+       include: [ LinkList, Review, Author, ListJoin ]
     });
     return res.json(fetchFicToFind);
 }))
@@ -69,7 +69,15 @@ router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
             readStatus
         });
     }
-    return res.json(fetchFicToUpdate);
+
+    const fetchFicToFind = await Fic.findOne({
+        where: { id },
+       include: [ LinkList, Review, Author, ListJoin ]
+    });
+    return res.json(fetchFicToFind);
+
+    // console.log('FETCHFICTORETURN*****', fetchFicToReturn)
+    // return res.json(fetchFicToReturn);
 }))
 
 router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {
@@ -127,12 +135,13 @@ router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {
 router.post('/create', asyncHandler(async(req, res) => {
     const { authorName, link, title, synopsis } = req.body;
     const ficToAddToDatabase = await Fic.build({link, title, synopsis,
-    Authors: {authorName},
+    Authors: { authorName },
     LinkLists: { link },
     }, {
         include: [ Author, LinkList ]
       });
       await ficToAddToDatabase.save();
+      res.json(ficToAddToDatabase);
 }));
 
 

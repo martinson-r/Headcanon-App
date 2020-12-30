@@ -77,18 +77,25 @@ const load = list => ({
               }),
             });
             dispatch(add(response));
+            const addedFic = response.json();
+            return addedFic;
   }
 
   export const toggleReadStatus = (payload) => async dispatch => {
     const { id, readStatus } = payload;
-    const response = await fetch(`/api/fics/${id.toString()}/edit`, {
+    const res = await fetch(`/api/fics/${id.toString()}/edit`, {
       method: 'PUT',
               headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
               body: JSON.stringify({
                 readStatus: readStatus
               }),
             });
-            dispatch(loadSingle(response));
+            if (res.ok) {
+              const singleFic = await res.json();
+              console.log('singlefic', singleFic)
+              dispatch(loadSingle(singleFic));
+            }
+
   }
 
   const initialState = {
@@ -110,22 +117,23 @@ const load = list => ({
        }
       }
       case ADD_OR_LOAD_SINGLE: {
-        // if (!state[action.list.id]) {
-        //   const newState = {
-        //     ...state,
-        //     [action.list.id]: action.list
-        //   };
-        //   return newState;
-        // }
-        // return {
-        //   ...state,
-        //   //before I can retrieve the fic, it has to be added to the state in the first place
-        //   //remember that state is immutable
-        //   [action.list.id]: {
-        //     ...state[action.list.id],
-        //     ...action.list,
-        //   }
-        // };
+        console.log('action fic', action.fic);
+        if (!state[action.fic.id]) {
+          const newState = {
+            ...state,
+            [action.fic.id]: action.fic
+          };
+          return newState;
+        }
+        return {
+          ...state,
+          //before I can retrieve the fic, it has to be added to the state in the first place
+          //remember that state is immutable
+          [action.fic.id]: {
+            ...state[action.fic.id],
+            ...action.fic,
+          }
+        };
       }
       case DELETE_FIC: {
         const newState = { ...state }

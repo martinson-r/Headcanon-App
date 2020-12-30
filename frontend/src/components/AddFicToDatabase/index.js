@@ -26,11 +26,13 @@ const AddFicToDatabase = () => {
             link,
             synopsis
         }
+        // history.push('/');
 
-        history.push('/');
-
-dispatch(addFic(payload));
-
+let ficData = dispatch(addFic(payload));
+console.log(ficData);
+        if (ficData) {
+            history.push(`/fics/${ficData.id}`)
+        }
     }
 
     return (
