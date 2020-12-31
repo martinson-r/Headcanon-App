@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
+import DemoLogin from '../DemoLogin';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -27,6 +28,7 @@ function Navigation({ isLoaded }){
       <NavLink exact to="/">Home</NavLink>
       <NavLink exact to="/fic/add">Add a Fic</NavLink>
       {isLoaded && sessionLinks}
+      <DemoLogin />
     </div>
 
 

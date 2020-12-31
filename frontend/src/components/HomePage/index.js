@@ -8,6 +8,7 @@ import ShelfDetail from "../ShelfDetail";
 import AddShelf from "../AddShelf";
 import EditReview from "../EditReview";
 import AddFicToDatabase from "../AddFicToDatabase";
+import DemoLogin from "../DemoLogin";
 
 const HomePage = () => {
 
@@ -43,6 +44,9 @@ const HomePage = () => {
         </Route>}
         <Route path="/fic/add">
           <AddFicToDatabase />
+        </Route>
+        <Route path="/demo">
+          <DemoLogin />
         </Route>
         </Switch>
 
