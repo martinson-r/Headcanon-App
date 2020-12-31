@@ -19,15 +19,11 @@ const load = list => ({
     fic,
   })
 
-  // const add = fic => ({
-  //   type: ADD_FIC,
-  //   fic,
-  // })
-
   const loadSingle = fic => ({
     type: ADD_OR_LOAD_SINGLE,
     fic,
   })
+
 
   const remove = fic => ({
     type: DELETE_FIC,
@@ -49,6 +45,7 @@ const load = list => ({
       dispatch(loadSingle(res.data));
     }
   }
+
 
   export const deleteFicFromShelf = (payload) => async dispatch => {
     const {ficId, listId} = payload;
@@ -115,16 +112,32 @@ const load = list => ({
             }
   }
 
+  export const editReview = (payload) => async dispatch => {
+    console.log('EDIT REVIEW CALLED');
+    const { review, rating, id } = payload;
+    const res = await fetch(`/api/reviews/${id.toString()}/edit`, {
+      method: 'PUT',
+              headers: { "Content-Type": "application/json"},
+              body: JSON.stringify({
+                review,
+                rating,
+              }),
+            });
+            if (res.ok) {
+              dispatch(loadSingle(res.data));
+            }
+  }
+
   const initialState = {
     fic: [],
-    list: []
+    list: [],
   };
 
   const ficReducer= (state = initialState, action) => {
     switch (action.type) {
       case LOAD: {
         const allFics = {};
-      action.list.forEach((fic) => {
+        action.list.forEach((fic) => {
         allFics[fic.id] = fic;
       });
        return {
@@ -154,6 +167,7 @@ const load = list => ({
       }
       case DELETE_FIC: {
         const newState = { ...state }
+        return newState;
       }
       default:
         return state;

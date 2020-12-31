@@ -6,6 +6,7 @@ import FicDetail from "../FicDetail";
 import BookShelf from "../BookShelf";
 import ShelfDetail from "../ShelfDetail";
 import AddShelf from "../AddShelf";
+import EditReview from "../EditReview";
 import AddFicToDatabase from "../AddFicToDatabase";
 
 const HomePage = () => {
@@ -22,6 +23,7 @@ const HomePage = () => {
     return (
         <>
           <BookShelf />
+          <Switch>
         <Route exact path="/">
             <div class="fics"> <h2>LATEST FICS</h2>
             {fics.map((fic) => {
@@ -40,6 +42,7 @@ const HomePage = () => {
         <Route path="/fic/add">
           <AddFicToDatabase />
         </Route>
+        </Switch>
 
 
         </>

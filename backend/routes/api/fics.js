@@ -27,6 +27,12 @@ const validateSubmission = [
     check("synopsis")
       .exists({ checkFalsy: true })
       .withMessage("Please provide a short synopsis."),
+    check("synopsis")
+      .isLength({ max: 1000 })
+      .withMessage("Please provide a synopsis of less than 1000 characters."),
+    check("synopsis")
+      .isLength({ min: 25 })
+      .withMessage("Please provide a synopsis of at least 25 characters."),
     handleValidationErrors,
   ];
 

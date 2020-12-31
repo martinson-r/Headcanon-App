@@ -65,7 +65,7 @@ const AddFicToDatabase = () => {
             <label htmlFor="link">Link</label>
             <input name="link" placeholder="ex: http://www.fanfiction.net" type="text"onChange={updateLink} value={link}></input>
             <label htmlFor="synopsis">Synopsis</label>
-            <textarea name="synopsis" type="text"onChange={updateSynopsis} value={synopsis}></textarea>
+            <textarea name="synopsis" placeholder="Less than 1000 characters and more than 25 characters, please!" rows="8" cols="50" type="text"onChange={updateSynopsis} value={synopsis}></textarea>
             <button type="submit">Add Fanfic</button>
         </form>
         </div>

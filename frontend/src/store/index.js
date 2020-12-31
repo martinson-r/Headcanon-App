@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session'
 import fics from './fics';
 import shelves from './shelves';
+import reviews from './reviews';
 
 const rootReducer = combineReducers({
   session,
   fics,
-  shelves
+  shelves,
+  reviews
 });
 
 let enhancer;

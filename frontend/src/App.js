@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 // import LoginFormPage from "./components/LoginFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import EditReview from "./components/EditReview";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,9 +19,9 @@ function App() {
 
   return (
     <div>
-      <div class="grid-container">
-        <div class="header">
-        <h1 class="header-title">HeadCanonDB</h1>
+      <div className="grid-container">
+        <div className="header">
+        <h1 className="header-title">HeadCanonDB</h1>
         <Navigation isLoaded={isLoaded} />
         </div>
       {isLoaded && (
@@ -36,6 +37,9 @@ function App() {
           exact>
             <HomePage />
           </Route>
+          <Route path="/review/edit/:id">
+          <EditReview />
+        </Route>
         </Switch>
       )}
       </div>

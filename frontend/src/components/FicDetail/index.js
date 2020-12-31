@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { getOneFic, markRead, markUnread } from "../../store/fics";
 import AddFicToList from "../AddFicToList";
 import AddReview from "../AddReview";
+import EditReview from "../EditReview";
+
 
 const FicDetail = ({ficState}) => {
     const dispatch = useDispatch();
     const { ficId } = useParams();
     const sessionUser = useSelector((state) => state.session.user);
+    console.log('SESSION USER', sessionUser);
     const fic = useSelector(state => state.fics[ficId]);
 
     const [readStatus, setReadStatus] = useState(false);
@@ -30,7 +33,7 @@ const FicDetail = ({ficState}) => {
     }
 
     return (
-        <div class="fics">
+        <div className="fics">
             <h2>FIC DETAILS</h2>
             <p>{fic.title}</p>
             <p>Published: {fic.datePublished}</p>
@@ -40,7 +43,8 @@ const FicDetail = ({ficState}) => {
             <AddFicToList fic={fic} />
             <p>Reviews:</p>
             <AddReview fic={fic}/>
-            {fic.Reviews && fic.Reviews.map(review => <div key={review.id}><p>{review.User.username}: {review.rating} stars</p><p>"{review.review}"</p></div>)}
+            {fic.Reviews && fic.Reviews.map(review => <div key={review.id}><p>{review.User.username}: {review.rating} stars</p><p>"{review.review}"
+            </p>{sessionUser.id === review.User.id && <Link to={`/review/edit/${review.id}`}>Edit Review</Link>}</div>)}
 
         </div>
     );

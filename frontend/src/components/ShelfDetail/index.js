@@ -69,7 +69,7 @@ const ShelfDetail = () => {
     }
 
     return (
-        <div class="fics">
+        <div className="fics">
             <h2>FICS ON THIS SHELF</h2>
             <h2>{shelf.shelfName}</h2>
             <form onSubmit={handleSubmit}><button type="submit">Remove This Shelf</button></form>

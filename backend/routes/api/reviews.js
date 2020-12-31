@@ -16,6 +16,12 @@ router.get('/', asyncHandler(async(req, res) => {
      return res.json(fetchReviews);
 }));
 
+router.get('/:id', asyncHandler(async(req, res) => {
+    const id = req.params.id;
+    const fetchReview = await Review.findByPk(id);
+     return res.json(fetchReview);
+}));
+
 router.post('/:id/addreview', restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const {review, rating } = req.body;
@@ -32,6 +38,35 @@ router.post('/:id/addreview', restoreUser, asyncHandler(async(req, res) => {
          }, Author, ListJoin ]
         });
         return res.json(fetchFicToFind);
+}));
+
+router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
+    const id = req.params.id;
+    const {review, rating } = req.body;
+    const { user } = req;
+    const userId = user.id;
+
+    const reviewToEdit = await Review.findOne({
+        where: {
+            userId: userId,
+            id
+        }
+    })
+
+    if (reviewToEdit) {
+        await reviewToEdit.update({rating, review
+        });
+        const ficId = reviewToEdit.ficId;
+
+        const fetchFicToFind = await Fic.findOne({
+            where: { id: ficId },
+           include: [ LinkList, {model: Review, include:
+            User
+         }, Author, ListJoin ]
+        });
+        return res.json(fetchFicToFind);
+    }
+
 }));
 
 module.exports = router;

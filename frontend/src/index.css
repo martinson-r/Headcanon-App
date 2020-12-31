@@ -39,6 +39,10 @@ button {
     background-color: #2b0213;
   }
 
+  .hidden {
+      display: none;
+  }
+
 .grid-container {
     margin-left: 0;
     margin-right: 0;
