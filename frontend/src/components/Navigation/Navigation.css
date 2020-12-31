@@ -1,4 +1,9 @@
 
+.navigation-button {
+  margin: 0;
+  padding: 0;
+}
+
 button:focus .profile-circle {
   outline: 0;
   border: none;
