@@ -8,26 +8,36 @@ const BookShelf = () => {
     const shelves = useSelector(state => state.shelves.shelf);
     const sessionUser = useSelector((state) => state.session.user);
 
+    console.log('sessionUser', sessionUser)
+
     useEffect(() => {
         if (sessionUser) {
             dispatch(getShelf());
         }
       }, [dispatch]);
 
+
       if (!shelves.length) {
-          return <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
+        return <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
+    }
 
-      }
-
+    if (!sessionUser) {
+        return (
+            <p>Welcome to HeadCanonDB!</p>
+        )
+    }
     return (
         <div className="grid-container-shelves">
-            <h2>SHELVES</h2>
-            {shelves.map((shelf) => <p key={shelf.id}>
-                <Link to={`/shelves/${shelf.id}`}>{shelf.shelfName}</Link>
-                </p>)}
-                <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
-        </div>
+        <h2>SHELVES</h2>
+        {shelves.map((shelf) => <p key={shelf.id}>
+            <Link to={`/shelves/${shelf.id}`}>{shelf.shelfName}</Link>
+            </p>)}
+            <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
+    </div>
     )
+
+
 }
+
 
 export default BookShelf;

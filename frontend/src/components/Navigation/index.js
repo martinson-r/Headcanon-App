@@ -23,12 +23,12 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <div className="header-navigation">
+    <div className="header-navigation navigation">
       <NavLink exact to="/">Home</NavLink>
       <NavLink exact to="/fic/add">Add a Fic</NavLink>
       {isLoaded && sessionLinks}
     </div>
-    
+
 
   );
 }

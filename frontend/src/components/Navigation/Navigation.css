@@ -4,6 +4,11 @@ button:focus .profile-circle {
   border: none;
 }
 
+.profile-circle-button {
+  padding-top: 0;
+  vertical-align: top;
+}
+
 .profile-dropdown {
   position: absolute;
   color: black;
@@ -26,5 +31,5 @@ button:focus .profile-circle {
 
 .profile-circle {
   color: white;
-  font-size: 1.5em;
+  font-size: 2em;
 }

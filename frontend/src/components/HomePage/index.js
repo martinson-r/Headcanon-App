@@ -10,8 +10,10 @@ import EditReview from "../EditReview";
 import AddFicToDatabase from "../AddFicToDatabase";
 
 const HomePage = () => {
+
     const dispatch = useDispatch();
     const fics = useSelector(state => state.fics.list);
+    const sessionUser = useSelector((state) => state.session.user);
 
     useEffect(() => {
       dispatch(getFics());
@@ -36,9 +38,9 @@ const HomePage = () => {
         <Route path="/shelves/:shelfId">
           <ShelfDetail />
         </Route>
-        <Route path="/shelf/add">
+        {sessionUser && <Route path="/shelf/add">
           <AddShelf />
-        </Route>
+        </Route>}
         <Route path="/fic/add">
           <AddFicToDatabase />
         </Route>

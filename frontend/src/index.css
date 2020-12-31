@@ -23,7 +23,7 @@ a {
     text-decoration: none;
 }
 
-button {
+button .navigation {
     background-color: #550527;
     border: none;
     color: white;
@@ -31,6 +31,19 @@ button {
     font-weight: normal;
     font-family: 'Quicksand';
     margin: 10px 5px;
+  }
+
+  button {
+    background-color: #550527;
+    border: none;
+    color: white;
+    font-size: 1em;
+    font-weight: normal;
+    font-family: 'Quicksand';
+    margin: 10px 5px;
+    border-radius: 6px;
+    margin: 10px;
+    padding: 10px 20px;
   }
 
   button:focus {

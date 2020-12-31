@@ -28,7 +28,7 @@ const FicDetail = ({ficState}) => {
         e.preventDefault();
         setReadStatus(!readStatus);
     }
-      if (!fic || !fic.title) {
+      if (!fic || !fic.title || !fic.Reviews) {
         return null;
     }
 
@@ -44,7 +44,7 @@ const FicDetail = ({ficState}) => {
             <p>Reviews:</p>
             <AddReview fic={fic}/>
             {fic.Reviews && fic.Reviews.map(review => <div key={review.id}><p>{review.User.username}: {review.rating} stars</p><p>"{review.review}"
-            </p>{sessionUser.id === review.User.id && <Link to={`/review/edit/${review.id}`}>Edit Review</Link>}</div>)}
+            </p>{sessionUser && sessionUser.id === review.User.id && <Link to={`/review/edit/${review.id}`}>Edit Review</Link>}</div>)}
 
         </div>
     );
