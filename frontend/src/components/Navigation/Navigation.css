@@ -1,3 +1,30 @@
+
+button:focus .profile-circle {
+  outline: 0;
+  border: none;
+}
+
 .profile-dropdown {
   position: absolute;
+  color: black;
+  background-color: white;
+  border: solid black 2px;
+  padding: 30px;
+}
+
+.header-navigation {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 20px;
+}
+
+.header-navigation a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+.profile-circle {
+  color: white;
+  font-size: 1.5em;
 }

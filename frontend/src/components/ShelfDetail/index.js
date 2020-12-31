@@ -69,8 +69,8 @@ const ShelfDetail = () => {
     }
 
     return (
-        <div>
-            <p>FICS ON THIS SHELF</p>
+        <div class="fics">
+            <h2>FICS ON THIS SHELF</h2>
             <h2>{shelf.shelfName}</h2>
             <form onSubmit={handleSubmit}><button type="submit">Remove This Shelf</button></form>
             {fics.Fics.length && fics.Fics.map(fic => <div key={fic.id}><Link to={`/fics/${fic.id}`}>{fic.title}</Link> Rating: {calculateAverage(fic)} Read Status: {readStatus(fic)}<UpdateReadStatus fic={fic}/><DeleteFicFromShelf fic={fic} /></div>)}

@@ -20,14 +20,13 @@ const HomePage = () => {
       return null;
     }
     return (
-        <div>
+        <>
           <BookShelf />
-
         <Route exact path="/">
-            <p>LATEST FICS</p>
+            <div class="fics"> <h2>LATEST FICS</h2>
             {fics.map((fic) => {
               return(<NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}<br /></NavLink>)
-          })}
+          })}</div>
         </Route>
         <Route path="/fics/:ficId">
           <FicDetail />
@@ -41,9 +40,9 @@ const HomePage = () => {
         <Route path="/fic/add">
           <AddFicToDatabase />
         </Route>
-       
 
-        </div>
+
+        </>
 
     )
 }

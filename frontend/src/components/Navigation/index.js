@@ -15,23 +15,20 @@ function Navigation({ isLoaded }){
     );
   } else {
     sessionLinks = (
-      <>
+      <div>
         <LoginFormModal />
         <NavLink to="/signup">Sign Up</NavLink>
-      </>
+      </div>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        {isLoaded && sessionLinks}
-      </li>
-      <li>
+    <div class="header-navigation">
+      <NavLink exact to="/">Home</NavLink>
       <NavLink exact to="/fic/add">Add a Fic</NavLink>
-      </li>
-    </ul>
+      {isLoaded && sessionLinks}
+    </div>
+
   );
 }
 

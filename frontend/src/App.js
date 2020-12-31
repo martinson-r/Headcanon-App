@@ -17,10 +17,17 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <Navigation isLoaded={isLoaded} />
+    <div>
+      <div class="grid-container">
+        <div class="header">
+        <h1 class="header-title">HeadCanonDB</h1>
+        <Navigation isLoaded={isLoaded} />
+        </div>
       {isLoaded && (
         <Switch>
+          <Route path="/signup">
+            <SignupFormPage />
+          </Route>
           {/* <Route path="/login" >
             <LoginFormPage />
           </Route> */}
@@ -29,12 +36,10 @@ function App() {
           exact>
             <HomePage />
           </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
         </Switch>
       )}
-    </>
+      </div>
+    </div>
   );
 }
 

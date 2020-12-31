@@ -30,8 +30,8 @@ const FicDetail = () => {
     }
 
     return (
-        <div>
-            <p>FIC DETAILS</p>
+        <div class="fics">
+            <h2>FIC DETAILS</h2>
             <p>{fic.title}</p>
             <p>Published: {fic.datePublished}</p>
             <p>Authors: {fic.Authors.map((author) => <span key={author.id}>{author.authorName}</span>)}</p>
