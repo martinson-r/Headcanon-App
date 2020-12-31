@@ -3,11 +3,32 @@ const { check } = require('express-validator');
 const asyncHandler = require('express-async-handler');
 
 const { handleValidationErrors } = require('../../utils/validation');
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, Fic, FicShelf, ReadStatus, ReadJoin, Author, Review, AuthorList, FicList, ListJoin, LinkList } = require('../../db/models');
+const { restoreUser } = require('../../utils/auth');
+const { User, Fic, FicShelf, Author, Review, AuthorList, FicList, ListJoin, LinkList } = require('../../db/models');
 const authorlist = require('../../db/models/authorlist');
 
 const router = express.Router();
+
+const validateSubmission = [
+    check("authorName")
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage("Please provide an author name."),
+    check("link")
+      .exists({ checkFalsy: true })
+      .withMessage("Please provide a link to the fanfic."),
+      check("link")
+      .contains('http', { ignoreCase: true})
+      .withMessage("Please provide a valid link format. Example: http://fanfiction.net/afanfic"),
+      check("title")
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage("Please provide a title."),
+    check("synopsis")
+      .exists({ checkFalsy: true })
+      .withMessage("Please provide a short synopsis."),
+    handleValidationErrors,
+  ];
 
 router.get('/', asyncHandler(async(req, res) => {
         const { user } = req;
@@ -19,19 +40,6 @@ router.get('/', asyncHandler(async(req, res) => {
          });
          return res.json(fetchFics);
 
-
-    // if (user !== undefined ) {
-    //     const userId = user.id;
-    //     const fetchFics = await Fic.findAll({
-    //         include: [Author, LinkList, Review]
-    //      });
-    //      return res.json(fetchFics);
-    // }
-    // const fetchFics = await Fic.findAll({
-    //     include: [Author, LinkList, Review]
-    //  });
-
-    //  return res.json(fetchFics);
 }))
 
 router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
@@ -48,15 +56,12 @@ router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
 
 router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
-    const { user } = req;
-    const userId = user.id;
     const fetchFicToFind = await Fic.findOne({
         where: { id },
        include: [ LinkList, {model: Review, include:
            User
-        } , Author, ListJoin ]
+        }, Author, ListJoin ]
     });
-    console.log('FICS GET CALLED');
     return res.json(fetchFicToFind);
 }))
 
@@ -125,32 +130,29 @@ router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {
 
         await newListJoin.save();
 
-        // const ficListId = newListEntry.id;
-        // const updatedList = await FicList.findAll({
-        // where: {
-        //     ficShelfId
-        // }
-
         const updatedList = await FicList.findAll({
             where: { ficShelfId },
             include: { model: Fic, through: [ListJoin], include: [Review, { model: Author, through: [AuthorList]}]},
         })
-        console.log('UPDATED LIST RESPONDING');
-        res.json(updatedList);
+        return res.json(updatedList);
     }
 }));
 
-router.post('/create', asyncHandler(async(req, res) => {
+router.post('/create',
+validateSubmission,
+asyncHandler(async(req, res) => {
     const { authorName, link, title, synopsis } = req.body;
+
     const ficToAddToDatabase = await Fic.build({link, title, synopsis,
     Authors: { authorName },
     LinkLists: { link },
     }, {
         include: [ Author, LinkList, ListJoin ]
       });
+
       await ficToAddToDatabase.save();
-      res.json(ficToAddToDatabase);
-      console.log('CREATE RESPONDING', ficToAddToDatabase)
+      return res.json(ficToAddToDatabase);
+
 }));
 
 

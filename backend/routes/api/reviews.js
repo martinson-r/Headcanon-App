@@ -27,7 +27,9 @@ router.post('/:id/addreview', restoreUser, asyncHandler(async(req, res) => {
           await reviewToAddToDatabase.save();
           const fetchFicToFind = await Fic.findOne({
             where: { id },
-           include: [ LinkList, Review, Author, ListJoin ]
+           include: [ LinkList, {model: Review, include:
+            User
+         }, Author, ListJoin ]
         });
         return res.json(fetchFicToFind);
 }));

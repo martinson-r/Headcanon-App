@@ -12,19 +12,14 @@ const AddFicToDatabase = () => {
     const history = useHistory();
     const ficState = useSelector(state => state.fics);
     const lastTitle = ficState.list[ficState.list.length-1].title;
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         if (lastTitle === title) {
-            console.log('IT matches!');
             const id = ficState.list[ficState.list.length-1].id;
             history.push(`/fics/${id}`)
         }
     },[ficState])
-    // console.log('FICSTATE', ficState)
-
-    // console.log('LAST ITEM', ficState.list[ficState.list.length-1].title);
-
-    // const match = ficState.list.find(el => console.log('MATCH?',  el.title === title ));
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateAuthorName = (e) => setAuthorName(e.target.value);
@@ -35,30 +30,40 @@ const AddFicToDatabase = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setErrors([]);
         const payload = {
             title,
             authorName,
             link,
             synopsis
         }
-
-        dispatch(addFic(payload))
-
+        return dispatch(addFic(payload))
+        .catch((res) => {
+            console.log('res', res);
+            if (res.data && res.data.errors) {
+                setErrors(res.data.errors);
             }
+          });
+    }
 
     return (
         <div>
              <p>Add a Fanfic to the Database:</p>
         <form onSubmit={handleSubmit}>
+        {console.log('ERRORS', errors)}
+            <ul>
+            {errors.map((error, idx) => (
+                <li key={idx}>{error}</li>
+            ))}
+            </ul>
             <label htmlFor="title">Title</label>
             <input name="title" type="text" onChange={updateTitle} value={title}></input>
-            <label htmlFor="author">Authors:</label>
+            <label htmlFor="author">Author:</label>
             {/* add logic so additional author fields appear as you input authors */}
             <input name="author" type="text" onChange={updateAuthorName} value={authorName}></input>
             {/* add logic so additional link fields appear as you input authors */}
             <label htmlFor="link">Link</label>
-            <input name="link" type="text"onChange={updateLink} value={link}></input>
+            <input name="link" placeholder="ex: http://www.fanfiction.net" type="text"onChange={updateLink} value={link}></input>
             <label htmlFor="synopsis">Synopsis</label>
             <textarea name="synopsis" type="text"onChange={updateSynopsis} value={synopsis}></textarea>
             <button type="submit">Add Fanfic</button>

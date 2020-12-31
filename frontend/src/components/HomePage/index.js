@@ -29,7 +29,7 @@ const HomePage = () => {
           })}</div>
         </Route>
         <Route path="/fics/:ficId">
-          <FicDetail />
+          <FicDetail ficState={fics}/>
         </Route>
         <Route path="/shelves/:shelfId">
           <ShelfDetail />

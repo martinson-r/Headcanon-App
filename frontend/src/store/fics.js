@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { fetch } from './csrf.js';
 
 const LOAD = "./fics/LOAD";
 
@@ -36,16 +37,16 @@ const load = list => ({
   export const getFics = () => async dispatch => {
     const res = await fetch(`/api/fics`);
     if (res.ok) {
-      const fics = await res.json();
-      dispatch(load(fics));
+      // const fics = await res.json();
+      dispatch(load(res.data));
     }
   };
 
   export const getOneFic = (id) => async dispatch => {
-    const data = await fetch(`/api/fics/${id.toString()}`);
-    if (data.ok) {
-      const oneFic = await data.json();
-      dispatch(loadSingle(oneFic));
+    const res = await fetch(`/api/fics/${id.toString()}`);
+    if (res.ok) {
+      // const oneFic = await res.json();
+      dispatch(loadSingle(res.data));
     }
   }
 
@@ -53,7 +54,7 @@ const load = list => ({
     const {ficId, listId} = payload;
     await fetch(`/api/fics/${ficId.toString()}`, {
       method: 'DELETE',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 ficId,
                 listId
@@ -74,12 +75,12 @@ const load = list => ({
                 synopsis
               }),
             });
+            console.log('RESPONSE', response);
             if (response.ok) {
-              const singleFic = await response.json();
+              // const singleFic = await response.json();
               // console.log('Current single fic', singleFic)
-              dispatch(loadSingle(singleFic));
+              dispatch(loadSingle(response.data));
             }
-
   }
 
   export const toggleReadStatus = (payload) => async dispatch => {
@@ -92,9 +93,8 @@ const load = list => ({
               }),
             });
             if (res.ok) {
-              const singleFic = await res.json();
-              console.log('singlefic', singleFic)
-              dispatch(loadSingle(singleFic));
+              // const singleFic = await res.json();
+              dispatch(loadSingle(res.data));
             }
 
   }
@@ -103,15 +103,15 @@ const load = list => ({
     const { review, rating, id } = payload;
     const res = await fetch(`/api/reviews/${id.toString()}/addreview`, {
       method: 'POST',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json"},
               body: JSON.stringify({
                 review,
                 rating,
               }),
             });
             if (res.ok) {
-              const singleFic = await res.json();
-              dispatch(loadSingle(singleFic));
+              // const singleFic = await res.json();
+              dispatch(loadSingle(res.data));
             }
   }
 

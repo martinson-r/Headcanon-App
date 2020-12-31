@@ -4,6 +4,7 @@ import { addReview } from "../../store/fics";
 
 const AddReview = ({fic}) => {
     const dispatch = useDispatch();
+    console.log('FIC', fic)
     const id = fic.id;
     const [rating, setRating] = useState(5);
     const [review, setReview] = useState('');

@@ -5,17 +5,17 @@ import { toggleReadStatus } from "../../store/fics";
 import { getOneShelf } from "../../store/shelves";
 
 const UpdateReadStatus = ({fic}) => {
-    console.log('FIC NOW', fic)
-    //Should I be doing this with useState?
-    const thisFicsReadStatus = fic.ListJoin.readStatus
+    const trackFicsReadStatus = useSelector(state => state.fics[fic.id]);
+    const thisFicsReadStatus = fic.ListJoin.readStatus;
     const [readStatus, setReadStatus] = useState(thisFicsReadStatus);
     const dispatch = useDispatch();
     const { shelfId } = useParams();
 
+    console.log('This fic read status', thisFicsReadStatus)
 
     useEffect(() => {
         dispatch(getOneShelf(shelfId));
-      }, [dispatch, thisFicsReadStatus]);
+      }, [dispatch, trackFicsReadStatus]);
 
     const readStatusText = (thisFicsReadStatus) => {
         if (thisFicsReadStatus === true ) {
@@ -32,7 +32,7 @@ const handleSubmit = async (e) => {
         readStatus: !thisFicsReadStatus
     }
     dispatch(toggleReadStatus(payload));
-    setReadStatus(thisFicsReadStatus)
+    setReadStatus(!thisFicsReadStatus);
 }
 
 return (
