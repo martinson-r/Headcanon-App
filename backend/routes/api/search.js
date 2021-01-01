@@ -18,8 +18,13 @@ const searchFics = await Fic.findAll({
         [Op.or]: [
             { title: { [Op.iLike]: `%${query}%` } },
             { synopsis: { [Op.iLike]: `%${query}%` } },
+            { '$Authors.authorName$': { [Op.iLike]: `%${query}%` } },
           ]
-    }
+    },
+    include: [{
+        model: Author,
+        required: false,
+    }],
   });
   res.json(searchFics);
   console.log('SEARCHFICS', searchFics);
