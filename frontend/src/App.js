@@ -7,6 +7,8 @@ import HomePage from "./components/HomePage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import EditReview from "./components/EditReview";
+import PageNotFound from "./components/PageNotFound";
+import BookShelf from "./components/BookShelf";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,13 +35,17 @@ function App() {
             <LoginFormPage />
           </Route> */}
           <Route
-          path={["/", "/fics/:ficId", "/shelves/:shelfId", "/shelf/add", "/fic/add", "/demo", "/search"]}
+          path={["/", "/fics/:ficId", "/shelves/:shelfId", "/shelf/add", "/fic/add", "/demo"]}
           exact>
             <HomePage />
           </Route>
           <Route path="/review/edit/:id">
-          <EditReview />
-        </Route>
+            <EditReview />
+          </Route>
+          <Route>
+            <BookShelf />
+            <PageNotFound />
+          </Route>
         </Switch>
       )}
       </div>

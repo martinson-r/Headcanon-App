@@ -1,16 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getFics } from "../../store/fics";
-import { NavLink, Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import FicDetail from "../FicDetail";
 import BookShelf from "../BookShelf";
 import ShelfDetail from "../ShelfDetail";
 import AddShelf from "../AddShelf";
-import EditReview from "../EditReview";
 import AddFicToDatabase from "../AddFicToDatabase";
 import DemoLogin from "../DemoLogin";
 import Search from "../Search";
 import './Homepage.css';
+import FicResults from "../FicResults";
+import PageNotFound from "../PageNotFound";
 
 const HomePage = () => {
 
@@ -22,7 +23,7 @@ const HomePage = () => {
       dispatch(getFics());
     }, [dispatch]);
 
-    if (!fics.length) {
+    if (!fics) {
       return null;
     }
 
@@ -31,28 +32,26 @@ const HomePage = () => {
           <BookShelf />
           <Switch>
            <Route exact path="/">
-           <div className="fics">
-            <Search />
-            {fics.length && <h2>LATEST FICS</h2>}
-            {fics.map((fic) => {
-              return(<NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}<br /></NavLink>)
-          })}</div>
-        </Route>
-        <Route path="/fics/:ficId">
-          <FicDetail ficState={fics}/>
-        </Route>
-        <Route path="/shelves/:shelfId">
-          <ShelfDetail />
-        </Route>
-        {sessionUser && <Route path="/shelf/add">
-          <AddShelf />
-        </Route>}
-        <Route path="/fic/add">
-          <AddFicToDatabase />
-        </Route>
-        <Route path="/demo">
-          <DemoLogin />
-        </Route>
+              <div className="fics">
+                <Search />
+                <FicResults fics={fics} />
+              </div>
+            </Route>
+            <Route path="/fics/:ficId">
+              <FicDetail ficState={fics}/>
+            </Route>
+            <Route path="/shelves/:shelfId">
+              <ShelfDetail />
+            </Route>
+            {sessionUser && <Route path="/shelf/add">
+              <AddShelf />
+            </Route>}
+            <Route path="/fic/add">
+              <AddFicToDatabase />
+            </Route>
+            <Route path="/demo">
+              <DemoLogin />
+            </Route>
         </Switch>
         </>
 

@@ -6,11 +6,9 @@ import { searchFics } from "../../store/fics";
 
 const Search = () => {
 
-    const fics = useSelector(state => state.fics.list);
     const [query, setQuery] = useState("");
     const dispatch = useDispatch();
     const updateQuery = (e) => setQuery(e.target.value);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,13 +16,14 @@ const Search = () => {
           query
         };
         dispatch(searchFics(payload));
+        setQuery("");
       };
 
     return (
         <>
           <form onSubmit={handleSubmit}>
             <h2>Search FanFiction:</h2>
-            <input type="text" value={query} onChange={updateQuery}></input>
+            <input type="text" value={query} onChange={updateQuery} required></input>
             <button type="submit">Search Fics</button>
           </form>
         </>

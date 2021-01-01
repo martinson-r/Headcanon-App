@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import DemoLogin from '../DemoLogin';
 import './Navigation.css';
+import { getFics } from "../../store/fics";
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
@@ -25,7 +26,7 @@ function Navigation({ isLoaded }){
 
   return (
     <div className="header-navigation">
-      <NavLink className="navlink" exact to="/">Home</NavLink>
+      <NavLink className="navlink" exact to="/" onClick={getFics}>Home</NavLink>
       <NavLink className="navlink" exact to="/fic/add">Add a Fic</NavLink>
       {isLoaded && sessionLinks}
       <DemoLogin />
