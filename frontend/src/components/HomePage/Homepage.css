@@ -1,0 +1,17 @@
+button {
+    background-color: #550527;
+    border: none;
+    color: white;
+    font-size: 1em;
+    font-weight: normal;
+    font-family: 'Quicksand';
+    margin: 10px 5px;
+    border-radius: 6px;
+    padding: 10px 20px;
+  }
+
+  button:focus {
+    outline: 0;
+    border: none;
+    background-color: #2b0213;
+  }

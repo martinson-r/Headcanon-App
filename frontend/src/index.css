@@ -30,26 +30,11 @@ button .navigation {
     font-size: 1.5em;
     font-weight: normal;
     font-family: 'Quicksand';
+    margin: 0;
+    padding: 0;
   }
 
-  button {
-    background-color: #550527;
-    border: none;
-    color: white;
-    font-size: 1em;
-    font-weight: normal;
-    font-family: 'Quicksand';
-    margin: 10px 5px;
-    border-radius: 6px;
-    margin: 10px;
-    padding: 10px 20px;
-  }
-
-  button:focus {
-    outline: 0;
-    border: none;
-    background-color: #2b0213;
-  }
+  
 
   .hidden {
       display: none;

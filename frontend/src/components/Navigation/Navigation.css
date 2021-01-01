@@ -2,6 +2,7 @@
 .navigation-button {
   margin: 0;
   padding: 0;
+  vertical-align: top;
 }
 
 button:focus .profile-circle {

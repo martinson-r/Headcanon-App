@@ -9,6 +9,7 @@ import AddShelf from "../AddShelf";
 import EditReview from "../EditReview";
 import AddFicToDatabase from "../AddFicToDatabase";
 import DemoLogin from "../DemoLogin";
+import './Homepage.css';
 
 const HomePage = () => {
 

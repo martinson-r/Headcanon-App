@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect }  from "react-router-dom";
 import { useState } from "react"
 import * as sessionActions from "../../store/session";
+import '../LoginFormModal/LoginForm.css'
 
 const DemoLogin = () => {
     const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const DemoLogin = () => {
     return (
         <>
         <form onSubmit={handleSubmit}>
-        <button>
+        <button type="submit" className="navigation-button" style={{fontSize: "1.5em"}}>
             Demo Login
           </button>
         </form>
