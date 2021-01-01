@@ -12,21 +12,21 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ProfileButton user={sessionUser} />
+      <ProfileButton className="navlink" user={sessionUser} />
     );
   } else {
     sessionLinks = (
       <>
         <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
+        <NavLink className="navlink" to="/signup">Sign Up</NavLink>
       </>
     );
   }
 
   return (
     <div className="header-navigation">
-      <NavLink exact to="/">Home</NavLink>
-      <NavLink exact to="/fic/add">Add a Fic</NavLink>
+      <NavLink className="navlink" exact to="/">Home</NavLink>
+      <NavLink className="navlink" exact to="/fic/add">Add a Fic</NavLink>
       {isLoaded && sessionLinks}
       <DemoLogin />
     </div>

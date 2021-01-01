@@ -29,6 +29,27 @@ button:focus .profile-circle {
   padding-bottom: 20px;
 }
 
+@media only screen and (max-width: 600px) {
+  .header-navigation {
+    display: block;
+    position: relative;
+  }
+
+  .header-navigation .navlink {
+    display: block;
+    text-align: center;
+  }
+
+  .navlink div {
+    display: block;
+  }
+
+  .header-navigation button {
+    width: 100%
+  }
+
+}
+
 .header-navigation a {
   color: white;
   text-decoration: none;
