@@ -18,23 +18,23 @@ HeadCanonDB is based on [Goodreads](https://www.goodreads.com/), with the purpos
 * PostgreSQL
 
 ## Installation
-1. Clone the repo
+1. Clone the repo:<br />
 `git clone https://github.com/martinson-r/Headcanon-App.git`
-1. cd to the root project directory and npm install:
+1. cd to the root project directory and npm install:<br />
 `npm install`
 1. cd into the frontend and backend folders, respectively, and npm install
-1. Log into PostGreSQL and create a user with a secure password and database creation privileges:
+1. Log into PostGreSQL and create a user with a secure password and database creation privileges:<br />
 `create user headcanondb_app with password *a secure password of your choice* createdb`
 1. Following the .env.example file, create a .env file with your chosen username, password, and a database name (such as headcanondb)
-1. Generate a JWT secret key using the Node repl
-`node`
-`require("crypto").randomBytes(32).toString("hex");`
-`.exit`
-1. Create the database:
+1. Generate a JWT secret key using the Node repl<br />
+`node`<br />
+`require("crypto").randomBytes(32).toString("hex");`<br />
+`.exit`<br />
+1. Create the database:<br />
 `npx dotenv sequelize db:migrate`
-1. Seed the database:
+1. Seed the database:<br />
 `npx dotenv sequelize db:seed:all`
-1. Open separate terminals and start the front end and back end (you must start them both):
+1. Open separate terminals and start the front end and back end (you must start them both):<br />
 `npm start`
 1. Navigate to localhost:3000
 
