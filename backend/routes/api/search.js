@@ -17,10 +17,9 @@ const searchFics = await Fic.findAll({
     where: {
         [Op.or]: [
             { title: { [Op.iLike]: `%${query}%` } },
-            { synopsis: { [Op.iLike]: `%${query}%` } }
+            { synopsis: { [Op.iLike]: `%${query}%` } },
           ]
-    },
-    include: [Author]
+    }
   });
   res.json(searchFics);
   console.log('SEARCHFICS', searchFics);

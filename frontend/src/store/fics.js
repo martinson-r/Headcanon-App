@@ -48,7 +48,6 @@ const load = list => ({
       }),
     });
     if (res.ok) {
-      console.log('RES DATA', res.data);
       dispatch(load(res.data));
     }
   };

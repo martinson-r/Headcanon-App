@@ -25,13 +25,15 @@ const HomePage = () => {
     if (!fics.length) {
       return null;
     }
+
     return (
         <>
           <BookShelf />
           <Switch>
-        <Route exact path="/">
+           <Route exact path="/">
+           <div className="fics">
             <Search />
-            <div className="fics"> <h2>LATEST FICS</h2>
+            {fics.length && <h2>LATEST FICS</h2>}
             {fics.map((fic) => {
               return(<NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}<br /></NavLink>)
           })}</div>
