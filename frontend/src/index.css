@@ -16,6 +16,10 @@ form select {
     margin-left: 5px;
 }
 
+form textarea {
+    width: 50%;
+}
+
 form label {
     display: block;
     width: 50%;
