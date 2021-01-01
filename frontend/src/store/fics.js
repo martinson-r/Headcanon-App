@@ -72,10 +72,7 @@ const load = list => ({
                 synopsis
               }),
             });
-            console.log('RESPONSE', response);
             if (response.ok) {
-              // const singleFic = await response.json();
-              // console.log('Current single fic', singleFic)
               dispatch(loadSingle(response.data));
             }
   }
@@ -107,13 +104,11 @@ const load = list => ({
               }),
             });
             if (res.ok) {
-              // const singleFic = await res.json();
               dispatch(loadSingle(res.data));
             }
   }
 
   export const editReview = (payload) => async dispatch => {
-    console.log('EDIT REVIEW CALLED');
     const { review, rating, id } = payload;
     const res = await fetch(`/api/reviews/${id.toString()}/edit`, {
       method: 'PUT',

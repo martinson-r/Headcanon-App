@@ -8,8 +8,6 @@ const BookShelf = () => {
     const shelves = useSelector(state => state.shelves.shelf);
     const sessionUser = useSelector((state) => state.session.user);
 
-    console.log('sessionUser', sessionUser)
-
     useEffect(() => {
         if (sessionUser) {
             dispatch(getShelf());

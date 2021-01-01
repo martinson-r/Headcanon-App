@@ -14,7 +14,6 @@ function LoginForm() {
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password })).catch(
       (res) => {
-        console.log('login response', res);
         if (res.data && res.data.errors) setErrors(res.data.errors);
       }
     );
@@ -25,7 +24,6 @@ function LoginForm() {
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
-          {console.log('ERRORS', errors)}
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}

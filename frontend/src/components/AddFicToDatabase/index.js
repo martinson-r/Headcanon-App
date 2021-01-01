@@ -39,7 +39,6 @@ const AddFicToDatabase = () => {
         }
         return dispatch(addFic(payload))
         .catch((res) => {
-            console.log('res', res);
             if (res.data && res.data.errors) {
                 setErrors(res.data.errors);
             }
@@ -50,7 +49,6 @@ const AddFicToDatabase = () => {
         <div>
              <p>Add a Fanfic to the Database:</p>
         <form onSubmit={handleSubmit}>
-        {console.log('ERRORS', errors)}
             <ul>
             {errors.map((error, idx) => (
                 <li key={idx}>{error}</li>

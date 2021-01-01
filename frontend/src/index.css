@@ -21,6 +21,7 @@ li {
 
 a {
     text-decoration: none;
+    color: #688E26;
 }
 
 button .navigation {
@@ -34,7 +35,7 @@ button .navigation {
     padding: 0;
   }
 
-  
+
 
   .hidden {
       display: none;

@@ -29,7 +29,7 @@ const HomePage = () => {
           <BookShelf />
           <Switch>
         <Route exact path="/">
-            <div class="fics"> <h2>LATEST FICS</h2>
+            <div className="fics"> <h2>LATEST FICS</h2>
             {fics.map((fic) => {
               return(<NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}<br /></NavLink>)
           })}</div>

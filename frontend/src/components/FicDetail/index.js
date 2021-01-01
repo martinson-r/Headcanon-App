@@ -11,7 +11,6 @@ const FicDetail = ({ficState}) => {
     const dispatch = useDispatch();
     const { ficId } = useParams();
     const sessionUser = useSelector((state) => state.session.user);
-    console.log('SESSION USER', sessionUser);
     const fic = useSelector(state => state.fics[ficId]);
 
     const [readStatus, setReadStatus] = useState(false);

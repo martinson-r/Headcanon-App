@@ -11,8 +11,6 @@ const UpdateReadStatus = ({fic}) => {
     const dispatch = useDispatch();
     const { shelfId } = useParams();
 
-    console.log('This fic read status', thisFicsReadStatus)
-
     useEffect(() => {
         dispatch(getOneShelf(shelfId));
       }, [dispatch, trackFicsReadStatus]);

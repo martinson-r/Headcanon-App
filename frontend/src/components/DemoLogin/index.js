@@ -16,7 +16,6 @@ const DemoLogin = () => {
     setErrors([]);
     return dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" })).catch(
       (res) => {
-        console.log('login response', res);
         if (res.data && res.data.errors) setErrors(res.data.errors);
       }
     );

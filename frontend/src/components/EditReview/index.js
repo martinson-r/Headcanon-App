@@ -7,7 +7,6 @@ import { getOneReview } from "../../store/reviews";
 const EditReview = () => {
     const { id } = useParams();
     const reviewId = id;
-    console.log('id', reviewId)
     const dispatch = useDispatch();
     const singleReview = useSelector(state => state.reviews[id]);
     const history = useHistory();

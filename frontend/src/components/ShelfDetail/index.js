@@ -12,9 +12,6 @@ const ShelfDetail = () => {
     const shelf = useSelector(state => state.shelves[shelfId]);
     const fics = useSelector(state => state.shelves.ficlist[0]);
 
-    console.log('FICS SHELF DETAIL', fics)
-
-
     useEffect(() => {
         dispatch(getOneShelf(shelfId));
       }, [dispatch, shelfId]);
