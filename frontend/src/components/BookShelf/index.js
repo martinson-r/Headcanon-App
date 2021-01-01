@@ -13,19 +13,22 @@ const BookShelf = () => {
     useEffect(() => {
         if (sessionUser) {
             dispatch(getShelf());
+
+            if (!shelves.length) {
+                return <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
+            }
+
         }
-      }, [dispatch]);
+      }, [dispatch, sessionUser]);
 
 
-      if (!shelves.length) {
-        return <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>
-    }
 
     if (!sessionUser) {
         return (
             <p>Welcome to HeadCanonDB!</p>
         )
     }
+
     return (
         <div className="grid-container-shelves">
         <h2>SHELVES</h2>

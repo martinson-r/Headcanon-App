@@ -25,7 +25,7 @@ const DemoLogin = () => {
     return (
         <>
         <form onSubmit={handleSubmit}>
-        <button type="submit" className="navigation-button" style={{fontSize: "1.5em"}}>
+        <button className="navigation-button" style={{fontSize: "1.5em"}}>
             Demo Login
           </button>
         </form>

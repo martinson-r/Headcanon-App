@@ -50,8 +50,6 @@ const HomePage = () => {
           <DemoLogin />
         </Route>
         </Switch>
-
-
         </>
 
     )
