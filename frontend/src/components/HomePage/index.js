@@ -9,6 +9,7 @@ import AddShelf from "../AddShelf";
 import EditReview from "../EditReview";
 import AddFicToDatabase from "../AddFicToDatabase";
 import DemoLogin from "../DemoLogin";
+import Search from "../Search";
 import './Homepage.css';
 
 const HomePage = () => {
@@ -29,6 +30,7 @@ const HomePage = () => {
           <BookShelf />
           <Switch>
         <Route exact path="/">
+            <Search />
             <div className="fics"> <h2>LATEST FICS</h2>
             {fics.map((fic) => {
               return(<NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}<br /></NavLink>)

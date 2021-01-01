@@ -38,6 +38,21 @@ const load = list => ({
     }
   };
 
+  export const searchFics = (payload) => async dispatch => {
+    const { query } = payload;
+    const res = await fetch(`/api/search`, {
+      method: 'POST',
+      headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+      body: JSON.stringify({
+        query
+      }),
+    });
+    if (res.ok) {
+      console.log('RES DATA', res.data);
+      dispatch(load(res.data));
+    }
+  };
+
   export const getOneFic = (id) => async dispatch => {
     const res = await fetch(`/api/fics/${id.toString()}`);
     if (res.ok) {
