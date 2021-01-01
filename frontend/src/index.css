@@ -5,6 +5,26 @@ body {
     font-family: 'Quicksand';
 }
 
+form input {
+    display: block;
+    width: 50%;
+}
+
+form select {
+    display: block;
+    width: 50%;
+    margin-left: 5px;
+}
+
+form label {
+    display: block;
+    width: 50%;
+}
+
+form button {
+    display: block;
+}
+
 h1 {
     font-family: 'Fjalla One';
     font-size: 4em;
@@ -73,4 +93,43 @@ button .navigation {
 .grid-container-shelves {
     grid-row-start:2;
     border-right: 1px solid rgb(211, 211, 211);
+}
+
+@media only screen and (max-width: 600px) {
+    .grid-container {
+        margin-left: 0;
+        margin-right: 0;
+        display: block;
+        text-align: center;
+        /* grid-template-rows: 1fr 3fr;
+        grid-template-columns: 15% auto; */
+        height: 100vh;
+    }
+
+
+form input {
+    margin: 10px auto;
+    width: 100%;
+    text-align: center;
+}
+
+form select {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 0;
+}
+
+form textarea {
+    width: 100%;
+}
+
+form label {
+    width: 100%;
+    text-align: center;
+}
+
+form button {
+    width: 100%;
+    margin: 0 auto;
+}
 }
