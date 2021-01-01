@@ -52,6 +52,9 @@ const HomePage = () => {
             <Route path="/demo">
               <DemoLogin />
             </Route>
+            <Route>
+              <PageNotFound />
+            </Route>
         </Switch>
         </>
 

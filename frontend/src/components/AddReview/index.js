@@ -7,6 +7,7 @@ const AddReview = ({fic}) => {
     const id = fic.id;
     const [rating, setRating] = useState(5);
     const [review, setReview] = useState('');
+    const sessionUser = useSelector((state) => state.session.user);
 
     const updateRating = (e) => setRating(e.target.value);
     const updateReview = (e) => setReview(e.target.value);
@@ -22,18 +23,24 @@ const AddReview = ({fic}) => {
         dispatch(addReview(payload));
       };
 
-    return (
-        <div>
-            <p>Review this Fic:</p>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="rating">Rating:</label>
-                <input type="number" name="rating" value={rating} onChange={updateRating}></input>
-                <label htmlFor="review">Review:</label>
-                <textarea name="review" value={review} onChange={updateReview}></textarea>
-                <button type="submit">Submit Review</button>
-            </form>
-        </div>
-     )
-}
+      if (sessionUser) {
+        return (
+          <div>
+              <p>Review this Fic:</p>
+              <form onSubmit={handleSubmit}>
+                  <label htmlFor="rating">Rating:</label>
+                  <input type="number" name="rating" value={rating} onChange={updateRating}></input>
+                  <label htmlFor="review">Review:</label>
+                  <textarea name="review" value={review} onChange={updateReview}></textarea>
+                  <button type="submit">Submit Review</button>
+              </form>
+          </div>
+       )
+  }
+  return (
+    <p>You must be logged in to leave a review.</p>
+  )
+      }
+
 
 export default AddReview;
