@@ -24,7 +24,7 @@ HeadCanonDB is based on [Goodreads](https://www.goodreads.com/), with the purpos
 `npm install`
 1. cd into the frontend and backend folders, respectively, and npm install
 1. Log into PostGreSQL and create a user with a secure password and database creation privileges:
-`create user headcanondb_app with *a secure password of your choice* createdb`
+`create user headcanondb_app with password *a secure password of your choice* createdb`
 1. Following the .env.example file, create a .env file with your chosen username, password, and a database name (such as headcanondb)
 1. Generate a JWT secret key using the Node repl
 `node`
