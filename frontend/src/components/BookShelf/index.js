@@ -30,7 +30,7 @@ const BookShelf = () => {
     return (
         <div className="grid-container-shelves">
         <h2>SHELVES</h2>
-        {shelves.map((shelf) => <p key={shelf.id}>
+           {shelves.map((shelf) => <p key={shelf.id}>
             <Link to={`/shelves/${shelf.id}`}>{shelf.shelfName}</Link>
             </p>)}
             <p><Link to={`/shelf/add`}>Add a Book Shelf</Link></p>

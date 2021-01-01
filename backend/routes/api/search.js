@@ -24,7 +24,9 @@ const searchFics = await Fic.findAll({
     include: [{
         model: Author,
         required: false,
-    }],
+    },
+  { model: Review,
+  required: false}],
   });
   res.json(searchFics);
   console.log('SEARCHFICS', searchFics);

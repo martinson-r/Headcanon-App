@@ -40,6 +40,7 @@ router.get('/', asyncHandler(async(req, res) => {
         const { user } = req;
 
         const fetchFics = await Fic.findAll({
+            order: [['updatedAt', 'DESC']],
             include: [Author, LinkList, {model: Review, include:
                 User
              }, ListJoin]
