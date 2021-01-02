@@ -3,6 +3,8 @@ import { fetch } from './csrf.js';
 
 const LOAD = "./fics/LOAD";
 
+const LOAD_PAGINATED = "./fics/LOAD_PAGINATED";
+
 const ADD_OR_LOAD_SINGLE = "./fics/ADD_OR_LOAD_SINGLE";
 
 const DELETE_FIC = "./fics/DELETE_FIC";
@@ -22,6 +24,11 @@ const load = list => ({
   const loadSingle = fic => ({
     type: ADD_OR_LOAD_SINGLE,
     fic,
+  })
+
+  const loadPaginated = paginatedFics => ({
+    type: LOAD_PAGINATED,
+    paginatedFics
   })
 
 
@@ -91,6 +98,25 @@ const load = list => ({
             }
   }
 
+
+  export const getPaginatedFics = (payload) => async dispatch => {
+    const { page, size } = payload;
+    console.log('PAGE', page)
+    console.log('SIZE', size);
+    const response = await fetch(`/api/fics/paginated`, {
+      method: 'POST',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                page,
+                size
+              }),
+            });
+            if (response.ok) {
+              console.log('RES', response);
+              dispatch(loadPaginated(response.data));
+            }
+  }
+
   export const toggleReadStatus = (payload) => async dispatch => {
     const { id, readStatus } = payload;
     const res = await fetch(`/api/fics/${id.toString()}/edit`, {
@@ -153,6 +179,18 @@ const load = list => ({
          ...allFics,
          ...state,
          list: action.list
+       }
+      }
+      case LOAD_PAGINATED: {
+        const allFics = {};
+        action.paginatedFics.rows.forEach((fic) => {
+          console.log('PAGINATED FIC', fic)
+        allFics[fic.id] = fic;
+      });
+       return {
+         ...allFics,
+         ...state,
+         list: action.paginatedFics.rows
        }
       }
       case ADD_OR_LOAD_SINGLE: {

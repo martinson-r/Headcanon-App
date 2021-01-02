@@ -105,8 +105,6 @@ button .navigation {
         margin-right: 0;
         display: block;
         text-align: center;
-        /* grid-template-rows: 1fr 3fr;
-        grid-template-columns: 15% auto; */
         height: 100vh;
     }
 

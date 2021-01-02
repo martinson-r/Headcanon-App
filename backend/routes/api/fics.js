@@ -6,6 +6,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { restoreUser } = require('../../utils/auth');
 const { User, Fic, FicShelf, Author, Review, AuthorList, FicList, ListJoin, LinkList } = require('../../db/models');
 const authorlist = require('../../db/models/authorlist');
+const { getPagination, getPagingData } = require("../../utils/pagination");
 
 const router = express.Router();
 
@@ -37,7 +38,6 @@ const validateSubmission = [
   ];
 
 router.get('/', asyncHandler(async(req, res) => {
-        const { user } = req;
 
         const fetchFics = await Fic.findAll({
             order: [['updatedAt', 'DESC']],
@@ -162,6 +162,23 @@ asyncHandler(async(req, res) => {
 
 }));
 
+router.post('/paginated', asyncHandler(async(req, res) => {
+    const { page, size } = req.body;
+    console.log('size', size);
+    const { limit, offset } = getPagination(page, size);
+    console.log('offset:', offset);
+
+    const fetchPaginatedFics = await Fic.findAndCountAll({
+        limit,
+        offset,
+        order: [['updatedAt', 'DESC']],
+        include: [Author, LinkList, {model: Review, include:
+            User
+         }, ListJoin]
+     });
+     return res.json(fetchPaginatedFics);
+
+}))
 
 
 

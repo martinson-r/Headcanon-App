@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getShelf } from "../../store/shelves";
+import LoginFormModal from "../LoginFormModal";
+import "./BookShelf.css";
 
 const BookShelf = () => {
     const dispatch = useDispatch();
@@ -23,7 +25,9 @@ const BookShelf = () => {
 
     if (!sessionUser) {
         return (
-            <p>Welcome to HeadCanonDB!</p>
+            <>
+            <p>Welcome to <b>HeadCanonDB</b>!<br /><br /><Link to="/signup">Sign up</Link> or <span id="bookshelf-login"><LoginFormModal /></span> to start adding fanfictions to shelves, rating them, and tracking their read status!</p>
+            </>
         )
     }
 
