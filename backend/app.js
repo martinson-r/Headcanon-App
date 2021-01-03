@@ -12,6 +12,8 @@ const isProduction = environment === 'production';
 
 const app = express();
 
+app.enable('trust proxy')
+
 app.use(morgan('dev'));
 
 app.use(cookieParser());
@@ -33,7 +35,7 @@ app.use(
 app.use(
   csurf({
     cookie: {
-      // secure: isProduction,
+      secure: isProduction,
       sameSite: isProduction && 'Lax',
       httpOnly: true
     }
@@ -41,6 +43,14 @@ app.use(
 );
 
 app.use(routes); // Connect all the routes
+
+//force https
+app.use((request, response, next) => {
+  console.log('CALLED FORCE HTTPS');
+  if (process.env.NODE_ENV !== 'development' && !request.secure) {
+     return response.redirect("https://" + request.headers.host + request.url)
+    }
+     next()})
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
