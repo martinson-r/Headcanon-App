@@ -13,7 +13,7 @@ const removeUser = () => ({
 });
 
 export const login = ({ credential, password }) => async (dispatch) => {
-  console.log('credential', credential)
+
   const res = await fetch('/api/session', {
     method: 'POST',
     body: JSON.stringify({ credential, password })

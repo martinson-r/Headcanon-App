@@ -12,9 +12,9 @@ function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
 
-  useEffect(() => {
-    dispatch(getFics());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getFics());
+  // }, [dispatch]);
 
   let sessionLinks;
   if (sessionUser) {
