@@ -47,12 +47,12 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
-router.use('/fics', ficsRouter);
+// router.use('/fics', ficsRouter);
 
-router.use('/shelves', shelvesRouter);
+// router.use('/shelves', shelvesRouter);
 
-router.use('/reviews', reviewsRouter);
+// router.use('/reviews', reviewsRouter);
 
-router.use('/search', searchRouter);
+// router.use('/search', searchRouter);
 
 module.exports = router;

@@ -43,8 +43,8 @@ const HomePage = () => {
           <Switch>
            <Route exact path="/">
               <div className="fics">
-                {/* <Search /> */}
-                {/* <FicResults fics={fics} /> */}
+                <Search />
+                <FicResults fics={fics} />
               </div>
             </Route>
             <Route path="/fics/:ficId">

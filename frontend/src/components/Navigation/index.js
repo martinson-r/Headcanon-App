@@ -34,9 +34,8 @@ function Navigation({ isLoaded }){
     <div className="header-navigation">
       <NavLink className="navlink" exact to="/" onClick={()=> dispatch(getFics())}>Home</NavLink>
       <NavLink className="navlink" exact to="/fic/add">Add a Fic</NavLink>
-      <NavLink className="navlink" exact to="/search">Search Fics</NavLink>
       {isLoaded && sessionLinks}
-      {/* <DemoLogin /> */}
+      <DemoLogin />
     </div>
 
 
