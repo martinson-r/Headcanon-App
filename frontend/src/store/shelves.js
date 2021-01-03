@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { restoreUser} from "./session.js";
 
 export const LOAD_USER_SHELF = "./shelves/LOAD_USER_SHELF";
 export const LOAD_USER_BOOKS = "./shelves/LOAD_USER_BOOKS";

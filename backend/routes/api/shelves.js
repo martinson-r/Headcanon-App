@@ -11,9 +11,7 @@ const router = express.Router();
 
 router.get('/', restoreUser, asyncHandler(async(req, res) => {
     const { user } = req;
-    console.log('user', user);
     const userId = user.id;
-    console.log('userId', user.id);
     if (user) {
         const fetchShelves = await FicShelf.findAll({
             where: { userId }
