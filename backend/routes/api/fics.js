@@ -38,7 +38,6 @@ const validateSubmission = [
   ];
 
 router.get('/', asyncHandler(async(req, res) => {
-
         const fetchFics = await Fic.findAll({
             order: [['updatedAt', 'DESC']],
             include: [Author, LinkList, {model: Review, include:
@@ -46,10 +45,9 @@ router.get('/', asyncHandler(async(req, res) => {
              }, ListJoin]
          });
          return res.json(fetchFics);
-
 }))
 
-router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
+router.delete('/:id', asyncHandler(async(req, res) => {
     const {ficId, listId} = req.body;
 
     const fetchFicToRemove = await ListJoin.findOne({
@@ -61,7 +59,7 @@ router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
     return res.json("Fic removed");
 }))
 
-router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
+router.get('/:id', asyncHandler(async(req, res) => {
     const id = req.params.id;
     const fetchFicToFind = await Fic.findOne({
         where: { id },
@@ -146,7 +144,7 @@ router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {
 }));
 
 router.post('/create',
-validateSubmission, restoreUser,
+validateSubmission,
 asyncHandler(async(req, res) => {
     const { authorName, link, title, synopsis } = req.body;
 

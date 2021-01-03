@@ -35,6 +35,10 @@ const FicResults = ({fics}) => {
     //     }).map((fic) => fic);
     //   };
 
+    if (!fics) {
+        return null;
+    }
+
     if (!fics.length) {
         return (
             <div>

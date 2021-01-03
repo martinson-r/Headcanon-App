@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie';
+import { fetch } from './csrf.js';
 
 const LOAD = "./fics/LOAD";
 
@@ -39,8 +39,8 @@ const load = list => ({
   export const getFics = () => async dispatch => {
     const res = await fetch(`/api/fics`);
     if (res.ok) {
-      const fics = await res.json();
-      dispatch(load(fics));
+      // const fics = await res.json();
+      dispatch(load(res.data));
     }
   };
 
@@ -48,7 +48,6 @@ const load = list => ({
     const { query, page, size } = payload;
     const res = await fetch(`/api/search`, {
       method: 'POST',
-      headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
       body: JSON.stringify({
         page,
         size,
@@ -56,16 +55,16 @@ const load = list => ({
       }),
     });
     if (res.ok) {
-      const paginatedFics = await res.json();
-      dispatch(loadPaginated(paginatedFics));
+      console.log('RES', res);
+      dispatch(loadPaginated(res.data));
     }
   };
 
   export const getOneFic = (id) => async dispatch => {
     const res = await fetch(`/api/fics/${id.toString()}`);
     if (res.ok) {
-      const oneFic = await res.json();
-      dispatch(loadSingle(oneFic));
+      // const oneFic = await res.json();
+      dispatch(loadSingle(res.data));
     }
   }
 
@@ -74,7 +73,7 @@ const load = list => ({
     const {ficId, listId} = payload;
     await fetch(`/api/fics/${ficId.toString()}`, {
       method: 'DELETE',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+
               body: JSON.stringify({
                 ficId,
                 listId
@@ -87,7 +86,7 @@ const load = list => ({
     const { title, authorName, link, synopsis } = payload;
     const response = await fetch(`/api/fics/create`, {
       method: 'POST',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 title,
                 authorName,
@@ -96,33 +95,34 @@ const load = list => ({
               }),
             });
             if (response.ok) {
-              const ficToAdd = await response.json();
-              dispatch(loadSingle(ficToAdd));
+              dispatch(loadSingle(response.data));
             }
   }
 
 
-  // export const getPaginatedFics = (payload) => async dispatch => {
-  //   const { page, size } = payload;
-  //   const response = await fetch(`/api/fics/paginated`, {
-  //     method: 'POST',
-  //             headers: { "Content-Type": "application/json","XSRF-Token": Cookies.get('XSRF-TOKEN') },
-  //             body: JSON.stringify({
-  //               page,
-  //               size
-  //             }),
-  //           });
-  //           if (response.ok) {
-  //             const paginatedFics = await response.json();
-  //             dispatch(loadPaginated(paginatedFics));
-  //           }
-  // }
+  export const getPaginatedFics = (payload) => async dispatch => {
+    const { page, size } = payload;
+    console.log('PAGE', page)
+    console.log('SIZE', size);
+    const response = await fetch(`/api/fics/paginated`, {
+      method: 'POST',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                page,
+                size
+              }),
+            });
+            if (response.ok) {
+              console.log('RES', response);
+              dispatch(loadPaginated(response.data));
+            }
+  }
 
   export const toggleReadStatus = (payload) => async dispatch => {
     const { id, readStatus } = payload;
     const res = await fetch(`/api/fics/${id.toString()}/edit`, {
       method: 'PUT',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+
               body: JSON.stringify({
                 readStatus: readStatus
               }),
@@ -185,6 +185,7 @@ const load = list => ({
       case LOAD_PAGINATED: {
         const allFics = {};
         action.paginatedFics.rows.forEach((fic) => {
+          console.log('PAGINATED FIC', fic)
         allFics[fic.id] = fic;
       });
        return {
