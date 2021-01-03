@@ -75,7 +75,7 @@ const load = list => ({
     const {ficId, listId} = payload;
     await fetch(`/api/fics/${ficId.toString()}`, {
       method: 'DELETE',
-              headers: { "Content-Type": "application/json", , "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
               body: JSON.stringify({
                 ficId,
                 listId
@@ -108,7 +108,7 @@ const load = list => ({
     console.log('SIZE', size);
     const response = await fetch(`/api/fics/paginated`, {
       method: 'POST',
-              headers: { "Content-Type": "application/json", , "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
               body: JSON.stringify({
                 page,
                 size
