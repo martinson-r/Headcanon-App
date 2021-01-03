@@ -39,15 +39,15 @@ const HomePage = () => {
 
     return (
         <>
-          <BookShelf />
+          {/* <BookShelf /> */}
           <Switch>
            <Route exact path="/">
               <div className="fics">
                 {/* <Search /> */}
-                <FicResults fics={fics} />
+                {/* <FicResults fics={fics} /> */}
               </div>
             </Route>
-            <Route path="/fics/:ficId">
+            {/* <Route path="/fics/:ficId">
               <FicDetail ficState={fics}/>
             </Route>
             <Route path="/shelves/:shelfId">
@@ -58,13 +58,13 @@ const HomePage = () => {
             </Route>}
             <Route path="/fic/add">
               <AddFicToDatabase />
-            </Route>
+            </Route> */}
             {/* <Route path="/demo">
               <DemoLogin />
             </Route> */}
-            <Route>
+            {/* <Route>
               <PageNotFound />
-            </Route>
+            </Route> */}
         </Switch>
         </>
 
