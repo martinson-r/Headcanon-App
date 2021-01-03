@@ -19,7 +19,7 @@ const setTokenCookie = (res, user) => {
     res.cookie('token', token, {
       maxAge: expiresIn * 1000, // maxAge in milliseconds
       httpOnly: true,
-      secure: isProduction,
+      // secure: isProduction,
       sameSite: isProduction && "Lax",
     });
 
@@ -30,6 +30,7 @@ const setTokenCookie = (res, user) => {
     console.log('CALLED RESTORE USER')
     // token parsed from cookies
     const { token } = req.cookies;
+    console.log('token', token);
 
     return jwt.verify(token, secret, null, async (err, jwtPayload) => {
       if (err) {
