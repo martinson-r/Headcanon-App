@@ -23,13 +23,13 @@ const BookShelf = () => {
 
 
 
-    if (!sessionUser) {
-        return (
-            <>
-            <p>Welcome to <b>HeadCanonDB</b>!<br /><br /><Link to="/signup">Sign up</Link> or <span id="bookshelf-login"><LoginFormModal /></span> to start adding fanfictions to shelves, rating them, and tracking their read status!</p>
-            </>
-        )
-    }
+    // if (!sessionUser) {
+    //     return (
+    //         <>
+    //         <p>Welcome to <b>HeadCanonDB</b>!<br /><br /><Link to="/signup">Sign up</Link> or <span id="bookshelf-login"><LoginFormModal /></span> to start adding fanfictions to shelves, rating them, and tracking their read status!</p>
+    //         </>
+    //     )
+    // }
 
     return (
         <div className="grid-container-shelves">
