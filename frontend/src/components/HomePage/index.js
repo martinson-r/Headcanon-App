@@ -12,7 +12,7 @@ import Search from "../Search";
 import './Homepage.css';
 import FicResults from "../FicResults";
 import PageNotFound from "../PageNotFound";
-// import { getPaginatedFics } from "../../store/fics";
+import { getPaginatedFics } from "../../store/fics";
 
 
 const HomePage = () => {
@@ -39,15 +39,15 @@ const HomePage = () => {
 
     return (
         <>
-          {/* <BookShelf /> */}
+          <BookShelf />
           <Switch>
            <Route exact path="/">
               <div className="fics">
-                {/* <Search /> */}
-                {/* <FicResults fics={fics} /> */}
+                <Search />
+                <FicResults fics={fics} />
               </div>
             </Route>
-            {/* <Route path="/fics/:ficId">
+            <Route path="/fics/:ficId">
               <FicDetail ficState={fics}/>
             </Route>
             <Route path="/shelves/:shelfId">
@@ -58,13 +58,13 @@ const HomePage = () => {
             </Route>}
             <Route path="/fic/add">
               <AddFicToDatabase />
-            </Route> */}
-            {/* <Route path="/demo">
+            </Route>
+            <Route path="/demo">
               <DemoLogin />
-            </Route> */}
-            {/* <Route>
+            </Route>
+            <Route>
               <PageNotFound />
-            </Route> */}
+            </Route>
         </Switch>
         </>
 

@@ -35,7 +35,7 @@ function App() {
             <LoginFormPage />
           </Route> */}
           <Route
-          path={["/", "/fics/:ficId", "/shelves/:shelfId", "/shelf/add", "/fic/add"]}
+          path={["/", "/fics/:ficId", "/shelves/:shelfId", "/shelf/add", "/fic/add", "./demo"]}
           exact>
             <HomePage />
           </Route>
