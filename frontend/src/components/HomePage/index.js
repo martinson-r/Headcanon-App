@@ -30,7 +30,7 @@ const HomePage = () => {
     useEffect(() => {
       const size = 3;
       const payload = {page, size}
-      dispatch(getFics(payload));
+      dispatch(getPaginatedFics(payload));
       }, [dispatch]);
 
     if (!fics) {
