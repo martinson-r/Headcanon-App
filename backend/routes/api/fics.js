@@ -151,8 +151,9 @@ asyncHandler(async(req, res) => {
     const ficToAddToDatabase = await Fic.build({link, title, synopsis,
     Authors: { authorName },
     LinkLists: { link },
+    Reviews: [],
     }, {
-        include: [ Author, LinkList, ListJoin ]
+        include: [ Author, LinkList, ListJoin, Review ]
       });
 
       await ficToAddToDatabase.save();

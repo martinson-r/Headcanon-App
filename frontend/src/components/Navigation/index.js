@@ -12,10 +12,6 @@ function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
 
-  // useEffect(() => {
-  //   dispatch(getFics());
-  // }, [dispatch]);
-
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -32,7 +28,7 @@ function Navigation({ isLoaded }){
 
   return (
     <div className="header-navigation">
-      <NavLink className="navlink" exact to="/" onClick={()=> { dispatch(getFics()) }}>Home</NavLink>
+      <NavLink className="navlink" exact to="/" onClick={()=> { dispatch(getFics())} }>Home</NavLink>
       <NavLink className="navlink" exact to="/fic/add">Add a Fic</NavLink>
       {isLoaded && sessionLinks}
       <DemoLogin />

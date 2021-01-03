@@ -12,7 +12,7 @@ import Search from "../Search";
 import './Homepage.css';
 import FicResults from "../FicResults";
 import PageNotFound from "../PageNotFound";
-import { getPaginatedFics } from "../../store/fics";
+// import { getPaginatedFics } from "../../store/fics";
 
 
 const HomePage = () => {

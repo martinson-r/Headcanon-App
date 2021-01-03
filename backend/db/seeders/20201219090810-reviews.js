@@ -12,6 +12,18 @@ module.exports = {
         userId: 2,
         ficId: 1,
       },
+      {
+        rating: 5,
+        review: 'Love it!',
+        userId: 1,
+        ficId: 2,
+      },
+      {
+        rating: 5,
+        review: 'Sweet!',
+        userId: 3,
+        ficId: 3,
+      },
     ],
     {});
   },

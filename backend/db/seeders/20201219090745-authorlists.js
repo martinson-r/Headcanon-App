@@ -10,6 +10,22 @@ module.exports = {
         ficId: 1,
         authorId: 1,
       },
+      {
+        ficId: 2,
+        authorId: 2,
+      },
+      {
+        ficId: 3,
+        authorId: 3,
+      },
+      {
+        ficId: 4,
+        authorId: 4,
+      },
+      {
+        ficId: 5,
+        authorId: 5,
+      },
     ],
     {});
   },

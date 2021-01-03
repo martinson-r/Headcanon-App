@@ -7,7 +7,19 @@ module.exports = {
 
     return queryInterface.bulkInsert('Authors', [
       {
-        authorName: 'Some Random Person',
+        authorName: 'JackOfBladesX',
+      },
+      {
+        authorName: 'Unacceptablenoob27',
+      },
+      {
+        authorName: 'Lacrimula Falsa',
+      },
+      {
+        authorName: 'Spotty1006',
+      },
+      {
+        authorName: 'lightyearpig',
       },
     ],
     {});
