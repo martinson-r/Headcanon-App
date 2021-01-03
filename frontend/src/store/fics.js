@@ -55,7 +55,6 @@ const load = list => ({
       }),
     });
     if (res.ok) {
-      console.log('RES', res);
       dispatch(loadPaginated(res.data));
     }
   };
@@ -102,8 +101,6 @@ const load = list => ({
 
   export const getPaginatedFics = (payload) => async dispatch => {
     const { page, size } = payload;
-    console.log('PAGE', page)
-    console.log('SIZE', size);
     const response = await fetch(`/api/fics/paginated`, {
       method: 'POST',
               headers: { "Content-Type": "application/json" },
@@ -113,7 +110,6 @@ const load = list => ({
               }),
             });
             if (response.ok) {
-              console.log('RES', response);
               dispatch(loadPaginated(response.data));
             }
   }
@@ -185,7 +181,6 @@ const load = list => ({
       case LOAD_PAGINATED: {
         const allFics = {};
         action.paginatedFics.rows.forEach((fic) => {
-          console.log('PAGINATED FIC', fic)
         allFics[fic.id] = fic;
       });
        return {
