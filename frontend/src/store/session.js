@@ -1,5 +1,4 @@
 import { fetch } from './csrf.js';
-import Cookies from 'js-cookie';
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -14,6 +13,7 @@ const removeUser = () => ({
 });
 
 export const login = ({ credential, password }) => async (dispatch) => {
+  console.log('credential', credential)
   const res = await fetch('/api/session', {
     method: 'POST',
     body: JSON.stringify({ credential, password })
