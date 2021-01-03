@@ -138,7 +138,7 @@ const load = list => ({
     const { review, rating, id } = payload;
     const res = await fetch(`/api/reviews/${id.toString()}/addreview`, {
       method: 'POST',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')},
+              headers: { "Content-Type": "application/json"},
               body: JSON.stringify({
                 review,
                 rating,
@@ -153,7 +153,7 @@ const load = list => ({
     const { review, rating, id } = payload;
     const res = await fetch(`/api/reviews/${id.toString()}/edit`, {
       method: 'PUT',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')},
+              headers: { "Content-Type": "application/json"},
               body: JSON.stringify({
                 review,
                 rating,
