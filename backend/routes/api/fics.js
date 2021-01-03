@@ -175,7 +175,6 @@ router.post('/paginated', asyncHandler(async(req, res) => {
          }, ListJoin]
      });
      return res.json(fetchPaginatedFics);
-
 }))
 
 
