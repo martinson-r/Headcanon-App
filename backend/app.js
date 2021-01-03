@@ -31,6 +31,24 @@ app.use(
   })
 );
 
+//force https
+// app.use((request, response, next) => {
+//   console.log('CALLED FORCE HTTPS');
+//   if (process.env.NODE_ENV !== 'development' && !request.secure) {
+//      return response.redirect("https://" + request.headers.host + request.url)
+//     }
+//      next()})
+
+function requireHTTPS(req, res, next) {
+  // The 'x-forwarded-proto' check is for Heroku
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+}
+
+app.use(requireHTTPS);
+
 // Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
@@ -44,13 +62,7 @@ app.use(
 
 app.use(routes); // Connect all the routes
 
-//force https
-app.use((request, response, next) => {
-  console.log('CALLED FORCE HTTPS');
-  if (process.env.NODE_ENV !== 'development' && !request.secure) {
-     return response.redirect("https://" + request.headers.host + request.url)
-    }
-     next()})
+
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
