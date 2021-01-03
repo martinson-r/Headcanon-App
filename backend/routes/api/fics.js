@@ -164,9 +164,7 @@ asyncHandler(async(req, res) => {
 
 router.post('/paginated', asyncHandler(async(req, res) => {
     const { page, size } = req.body;
-    console.log('size', size);
     const { limit, offset } = getPagination(page, size);
-    console.log('offset:', offset);
 
     const fetchPaginatedFics = await Fic.findAndCountAll({
         limit,

@@ -46,16 +46,19 @@ const load = list => ({
   };
 
   export const searchFics = (payload) => async dispatch => {
-    const { query } = payload;
+    const { query, page, size } = payload;
     const res = await fetch(`/api/search`, {
       method: 'POST',
       headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
       body: JSON.stringify({
+        page,
+        size,
         query
       }),
     });
     if (res.ok) {
-      dispatch(load(res.data));
+      console.log('RES', res);
+      dispatch(loadPaginated(res.data));
     }
   };
 
