@@ -162,20 +162,20 @@ asyncHandler(async(req, res) => {
 
 }));
 
-router.post('/paginated', restoreUser, asyncHandler(async(req, res) => {
-    const { page, size } = req.body;
-    const { limit, offset } = getPagination(page, size);
+// router.post('/paginated', restoreUser, asyncHandler(async(req, res) => {
+//     const { page, size } = req.body;
+//     const { limit, offset } = getPagination(page, size);
 
-    const fetchPaginatedFics = await Fic.findAndCountAll({
-        limit,
-        offset,
-        order: [['updatedAt', 'DESC']],
-        include: [Author, LinkList, {model: Review, include:
-            User
-         }, ListJoin]
-     });
-     return res.json(fetchPaginatedFics);
-}))
+//     const fetchPaginatedFics = await Fic.findAndCountAll({
+//         limit,
+//         offset,
+//         order: [['updatedAt', 'DESC']],
+//         include: [Author, LinkList, {model: Review, include:
+//             User
+//          }, ListJoin]
+//      });
+//      return res.json(fetchPaginatedFics);
+// }))
 
 
 

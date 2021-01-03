@@ -12,7 +12,7 @@ import Search from "../Search";
 import './Homepage.css';
 import FicResults from "../FicResults";
 import PageNotFound from "../PageNotFound";
-import { getPaginatedFics } from "../../store/fics";
+// import { getPaginatedFics } from "../../store/fics";
 
 
 const HomePage = () => {
@@ -22,16 +22,16 @@ const HomePage = () => {
     const sessionUser = useSelector((state) => state.session.user);
     const [page, setPage] = useState(0);
 
-    // useEffect(() => {
-    //   dispatch(getFics());
-    // }, [dispatch]);
-
-
     useEffect(() => {
-      const size = 3;
-      const payload = {page, size}
-      dispatch(getPaginatedFics(payload));
-      }, [dispatch]);
+      dispatch(getFics());
+    }, [dispatch]);
+
+
+    // useEffect(() => {
+    //   const size = 3;
+    //   const payload = {page, size}
+    //   dispatch(getPaginatedFics(payload));
+    //   }, [dispatch]);
 
     if (!fics) {
       return null;
@@ -43,7 +43,7 @@ const HomePage = () => {
           <Switch>
            <Route exact path="/">
               <div className="fics">
-                <Search />
+                {/* <Search /> */}
                 <FicResults fics={fics} />
               </div>
             </Route>

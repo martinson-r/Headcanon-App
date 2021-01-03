@@ -102,21 +102,21 @@ const load = list => ({
   }
 
 
-  export const getPaginatedFics = (payload) => async dispatch => {
-    const { page, size } = payload;
-    const response = await fetch(`/api/fics/paginated`, {
-      method: 'POST',
-              headers: { "Content-Type": "application/json","XSRF-Token": Cookies.get('XSRF-TOKEN') },
-              body: JSON.stringify({
-                page,
-                size
-              }),
-            });
-            if (response.ok) {
-              const paginatedFics = await response.json();
-              dispatch(loadPaginated(paginatedFics));
-            }
-  }
+  // export const getPaginatedFics = (payload) => async dispatch => {
+  //   const { page, size } = payload;
+  //   const response = await fetch(`/api/fics/paginated`, {
+  //     method: 'POST',
+  //             headers: { "Content-Type": "application/json","XSRF-Token": Cookies.get('XSRF-TOKEN') },
+  //             body: JSON.stringify({
+  //               page,
+  //               size
+  //             }),
+  //           });
+  //           if (response.ok) {
+  //             const paginatedFics = await response.json();
+  //             dispatch(loadPaginated(paginatedFics));
+  //           }
+  // }
 
   export const toggleReadStatus = (payload) => async dispatch => {
     const { id, readStatus } = payload;
