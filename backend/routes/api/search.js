@@ -35,7 +35,6 @@ const searchFics = await Fic.findAndCountAll({
   required: false}],
   });
   res.json(searchFics);
-  console.log('SEARCHFICS', searchFics);
 }));
 
   module.exports = router;

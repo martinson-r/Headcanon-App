@@ -22,7 +22,6 @@ const FicResults = ({fics}) => {
 
     const submitNext = () => {
             setPage(page+1);
-            console.log(page)
             const size = 3;
             const payload = { page, size }
             dispatch(getPaginatedFics(payload));

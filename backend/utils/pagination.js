@@ -1,5 +1,4 @@
 const getPagination = (page, size) => {
-    console.log('PAGE IN GETPAGINATION', page)
     const limit = size ? +size : 3;
     const offset = page ? page * size : 0;
     return { limit, offset };
