@@ -7,13 +7,17 @@ import { searchFics } from "../../store/fics";
 const Search = () => {
 
     const [query, setQuery] = useState("");
+    const [page, setPage] = useState(1);
+    const size = 3;
     const dispatch = useDispatch();
     const updateQuery = (e) => setQuery(e.target.value);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const payload = {
-          query
+          query,
+          page,
+          size
         };
         dispatch(searchFics(payload));
         setQuery("");

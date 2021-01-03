@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getFics } from "../../store/fics";
 import { Route, Switch } from "react-router-dom";
 import FicDetail from "../FicDetail";
@@ -12,16 +12,26 @@ import Search from "../Search";
 import './Homepage.css';
 import FicResults from "../FicResults";
 import PageNotFound from "../PageNotFound";
+import { getPaginatedFics } from "../../store/fics";
+
 
 const HomePage = () => {
 
     const dispatch = useDispatch();
     const fics = useSelector(state => state.fics.list);
     const sessionUser = useSelector((state) => state.session.user);
+    const [page, setPage] = useState(0);
+
+    // useEffect(() => {
+    //   dispatch(getFics());
+    // }, [dispatch]);
+
 
     useEffect(() => {
-      dispatch(getFics());
-    }, [dispatch]);
+      const size = 3;
+      const payload = {page, size}
+      dispatch(getPaginatedFics(payload));
+      }, [dispatch]);
 
     if (!fics) {
       return null;

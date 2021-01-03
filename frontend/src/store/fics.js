@@ -3,6 +3,8 @@ import { fetch } from './csrf.js';
 
 const LOAD = "./fics/LOAD";
 
+const LOAD_PAGINATED = "./fics/LOAD_PAGINATED";
+
 const ADD_OR_LOAD_SINGLE = "./fics/ADD_OR_LOAD_SINGLE";
 
 const DELETE_FIC = "./fics/DELETE_FIC";
@@ -24,6 +26,11 @@ const load = list => ({
     fic,
   })
 
+  const loadPaginated = paginatedFics => ({
+    type: LOAD_PAGINATED,
+    paginatedFics
+  })
+
 
   const remove = fic => ({
     type: DELETE_FIC,
@@ -39,16 +46,19 @@ const load = list => ({
   };
 
   export const searchFics = (payload) => async dispatch => {
-    const { query } = payload;
+    const { query, page, size } = payload;
     const res = await fetch(`/api/search`, {
       method: 'POST',
       headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
       body: JSON.stringify({
+        page,
+        size,
         query
       }),
     });
     if (res.ok) {
-      dispatch(load(res.data));
+      console.log('RES', res);
+      dispatch(loadPaginated(res.data));
     }
   };
 
@@ -88,6 +98,25 @@ const load = list => ({
             });
             if (response.ok) {
               dispatch(loadSingle(response.data));
+            }
+  }
+
+
+  export const getPaginatedFics = (payload) => async dispatch => {
+    const { page, size } = payload;
+    console.log('PAGE', page)
+    console.log('SIZE', size);
+    const response = await fetch(`/api/fics/paginated`, {
+      method: 'POST',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                page,
+                size
+              }),
+            });
+            if (response.ok) {
+              console.log('RES', response);
+              dispatch(loadPaginated(response.data));
             }
   }
 
@@ -153,6 +182,18 @@ const load = list => ({
          ...allFics,
          ...state,
          list: action.list
+       }
+      }
+      case LOAD_PAGINATED: {
+        const allFics = {};
+        action.paginatedFics.rows.forEach((fic) => {
+          console.log('PAGINATED FIC', fic)
+        allFics[fic.id] = fic;
+      });
+       return {
+         ...allFics,
+         ...state,
+         list: action.paginatedFics.rows
        }
       }
       case ADD_OR_LOAD_SINGLE: {
