@@ -37,8 +37,7 @@ function App() {
           <Route
           path={["/", "/fics/:ficId", "/shelves/:shelfId", "/shelf/add", "/fic/add", "./demo"]}
           exact>
-            {/* <HomePage /> */}
-            <p>Placeholder</p>
+            <HomePage />
           </Route>
           <Route path="/review/edit/:id">
             <EditReview />
