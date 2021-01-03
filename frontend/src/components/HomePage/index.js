@@ -30,7 +30,7 @@ const HomePage = () => {
     useEffect(() => {
       const size = 3;
       const payload = {page, size}
-      dispatch(getPaginatedFics(payload));
+      dispatch(getFics(payload));
       }, [dispatch]);
 
     if (!fics) {
@@ -43,7 +43,7 @@ const HomePage = () => {
           <Switch>
            <Route exact path="/">
               <div className="fics">
-                <Search />
+                {/* <Search /> */}
                 <FicResults fics={fics} />
               </div>
             </Route>
