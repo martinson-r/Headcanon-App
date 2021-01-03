@@ -36,7 +36,7 @@ function Navigation({ isLoaded }){
       <NavLink className="navlink" exact to="/fic/add">Add a Fic</NavLink>
       <NavLink className="navlink" exact to="/search">Search Fics</NavLink>
       {isLoaded && sessionLinks}
-      <DemoLogin />
+      {/* <DemoLogin /> */}
     </div>
 
 

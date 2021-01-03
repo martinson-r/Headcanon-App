@@ -44,7 +44,7 @@ const HomePage = () => {
            <Route exact path="/">
               <div className="fics">
                 {/* <Search /> */}
-                <FicResults fics={fics} />
+                {/* <FicResults fics={fics} /> */}
               </div>
             </Route>
             <Route path="/fics/:ficId">
@@ -59,9 +59,9 @@ const HomePage = () => {
             <Route path="/fic/add">
               <AddFicToDatabase />
             </Route>
-            <Route path="/demo">
+            {/* <Route path="/demo">
               <DemoLogin />
-            </Route>
+            </Route> */}
             <Route>
               <PageNotFound />
             </Route>
