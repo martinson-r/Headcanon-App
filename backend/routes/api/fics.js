@@ -146,7 +146,7 @@ router.post('/:id/addtoshelf', restoreUser, asyncHandler(async(req, res) => {
 }));
 
 router.post('/create',
-validateSubmission,
+validateSubmission, restoreUser,
 asyncHandler(async(req, res) => {
     const { authorName, link, title, synopsis } = req.body;
 
@@ -162,7 +162,7 @@ asyncHandler(async(req, res) => {
 
 }));
 
-router.post('/paginated', asyncHandler(async(req, res) => {
+router.post('/paginated', restoreUser, asyncHandler(async(req, res) => {
     const { page, size } = req.body;
     const { limit, offset } = getPagination(page, size);
 

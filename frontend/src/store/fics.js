@@ -49,7 +49,7 @@ const load = list => ({
     const { query, page, size } = payload;
     const res = await fetch(`/api/search`, {
       method: 'POST',
-      headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         page,
         size,
@@ -75,7 +75,7 @@ const load = list => ({
     const {ficId, listId} = payload;
     await fetch(`/api/fics/${ficId.toString()}`, {
       method: 'DELETE',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 ficId,
                 listId
@@ -88,7 +88,7 @@ const load = list => ({
     const { title, authorName, link, synopsis } = payload;
     const response = await fetch(`/api/fics/create`, {
       method: 'POST',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 title,
                 authorName,
@@ -108,7 +108,7 @@ const load = list => ({
     console.log('SIZE', size);
     const response = await fetch(`/api/fics/paginated`, {
       method: 'POST',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 page,
                 size
@@ -124,7 +124,7 @@ const load = list => ({
     const { id, readStatus } = payload;
     const res = await fetch(`/api/fics/${id.toString()}/edit`, {
       method: 'PUT',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 readStatus: readStatus
               }),
@@ -140,7 +140,7 @@ const load = list => ({
     const { review, rating, id } = payload;
     const res = await fetch(`/api/reviews/${id.toString()}/addreview`, {
       method: 'POST',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')},
+              headers: { "Content-Type": "application/json"},
               body: JSON.stringify({
                 review,
                 rating,
@@ -155,7 +155,7 @@ const load = list => ({
     const { review, rating, id } = payload;
     const res = await fetch(`/api/reviews/${id.toString()}/edit`, {
       method: 'PUT',
-              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')},
+              headers: { "Content-Type": "application/json"},
               body: JSON.stringify({
                 review,
                 rating,
