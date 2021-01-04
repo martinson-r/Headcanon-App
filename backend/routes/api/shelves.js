@@ -51,8 +51,11 @@ router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
 }))
 
 router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
-    const { shelfName } = req.body;
     const id = req.params.id;
+
+    const fetchList = await FicList.findAll({
+        where: { ficShelfId: id}
+    })
 
     const fetchShelf = await FicShelf.findOne({
         where: { id },

@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     //FicShelf.hasMany(models.FicList, { foreignKey: "ficShelfId"});
     // FicShelf.belongsTo(models.User, { foreignKey: 'userId'});
-    FicShelf.hasMany(models.ListJoin, { foreignKey: 'ficShelfId'});
-    FicShelf.hasMany(models.FicList, { foreignKey: "ficShelfId"});
+    FicShelf.hasMany(models.ListJoin, { foreignKey: 'ficShelfId', onDelete: 'cascade', hooks:true });
+    FicShelf.hasMany(models.FicList, { foreignKey: "ficShelfId", onDelete: 'cascade', hooks:true });
   };
   return FicShelf;
 };
