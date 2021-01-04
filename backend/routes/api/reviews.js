@@ -9,6 +9,27 @@ const authorlist = require('../../db/models/authorlist');
 
 const router = express.Router();
 
+const validateSubmission = [
+    check("rating")
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage("Please provide a rating between 1 and 5."),
+    check("rating")
+      .isInt({ min: 1, max: 5 })
+      .withMessage("Rating must be a whole number between 1 and 5."),
+    check("review")
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage("Please provide a thoughtful review"),
+    check("review")
+      .isLength({ max: 1000 })
+      .withMessage("Please provide a review of less than 1000 characters."),
+    check("review")
+      .isLength({ min: 3 })
+      .withMessage("Please provide a review of at least 3 characters."),
+    handleValidationErrors,
+  ];
+
 router.get('/', asyncHandler(async(req, res) => {
     const fetchReviews = await Review.findAll({
         include: [Fic]
@@ -22,7 +43,7 @@ router.get('/:id', asyncHandler(async(req, res) => {
      return res.json(fetchReview);
 }));
 
-router.post('/:id/addreview', restoreUser, asyncHandler(async(req, res) => {
+router.post('/:id/addreview', validateSubmission, restoreUser, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const {review, rating } = req.body;
     const { user } = req;
@@ -40,7 +61,7 @@ router.post('/:id/addreview', restoreUser, asyncHandler(async(req, res) => {
         return res.json(fetchFicToFind);
 }));
 
-router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
+router.put('/:id/edit', restoreUser, validateSubmission, asyncHandler(async(req, res) => {
     const id = req.params.id;
     const {review, rating } = req.body;
     const { user } = req;

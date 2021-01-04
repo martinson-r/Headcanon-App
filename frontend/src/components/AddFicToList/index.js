@@ -1,15 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { getShelf, editShelf } from "../../store/shelves";
 
 const AddFicToList = ({fic}) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   useEffect(() => {
     dispatch(getShelf());
   }, [dispatch]);
     const ficId = fic.id;
 
-    const updateShelfName = (e) => setshelfName(e.target.value);
+    const updateShelfName = (e) => {
+      setshelfName(e.target.value);
+    };
       const shelves = useSelector(state => state.shelves.shelf);
       const [shelfName, setshelfName] = useState(shelves);
 
@@ -38,13 +43,13 @@ const AddFicToList = ({fic}) => {
         };
 
         dispatch(editShelf(payload));
-
+        history.push(`/`)
       };
 
 
      return (
         <form onSubmit={handleSubmit}>
-            <select onChange={updateShelfName} value={shelfName}>
+            <select onChange={updateShelfName} value={shelfName.shelfName}>
                 <option>Select a shelf:</option>
             {shelves.length && shelves.map(shelf =>
             <option key={shelf.shelfName}>{shelf.shelfName}</option>

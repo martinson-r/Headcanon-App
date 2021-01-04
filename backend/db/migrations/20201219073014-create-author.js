@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       authorName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(35)
       },
       createdAt: {
         allowNull: false,

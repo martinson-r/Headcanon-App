@@ -8,6 +8,7 @@ const AddReview = ({fic}) => {
     const [rating, setRating] = useState(5);
     const [review, setReview] = useState('');
     const sessionUser = useSelector((state) => state.session.user);
+    const [errors, setErrors] = useState([]);
 
     const updateRating = (e) => setRating(e.target.value);
     const updateReview = (e) => setReview(e.target.value);
@@ -20,7 +21,12 @@ const AddReview = ({fic}) => {
           rating,
           review
         };
-        dispatch(addReview(payload));
+        return dispatch(addReview(payload))
+        .catch((res) => {
+            if (res.data && res.data.errors) {
+                setErrors(res.data.errors);
+            }
+          });
       };
 
       if (sessionUser) {
@@ -28,6 +34,11 @@ const AddReview = ({fic}) => {
           <div>
               <p>Review this Fic:</p>
               <form onSubmit={handleSubmit}>
+                    <ul>
+                  {errors.map((error, idx) => (
+                      <li key={idx}>{error}</li>
+                  ))}
+                  </ul>
                   <label htmlFor="rating">Rating:</label>
                   <input type="number" name="rating" value={rating} onChange={updateRating}></input>
                   <label htmlFor="review">Review:</label>

@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       synopsis: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       datePublished: {
         type: Sequelize.DATEONLY

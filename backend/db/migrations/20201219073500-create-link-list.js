@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       link: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(300),
+        unique: true,
       },
       ficId: {
         type: Sequelize.INTEGER,

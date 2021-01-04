@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       seriesName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       createdAt: {
         allowNull: false,

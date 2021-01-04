@@ -1,5 +1,4 @@
 export const calculateAverage = (fic) => {
-    console.log('CALC AVERAGE FIC', fic)
     if (fic) {
         const reviewsArray = fic.Reviews;
         const mappedReviews = reviewsArray.map(review => review.rating)

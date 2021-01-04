@@ -94,7 +94,6 @@ const load = list => ({
               }),
             });
             if (response.ok) {
-              console.log('RESPONSE', response.data);
               dispatch(loadSingle(response.data));
             }
   }

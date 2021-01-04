@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       review: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       ficId: {
         type: Sequelize.INTEGER,

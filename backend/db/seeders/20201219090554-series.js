@@ -10,6 +10,18 @@ module.exports = {
       {
         seriesName: 'Naruto',
       },
+      {
+        seriesName: 'Star Wars',
+      },
+      {
+        seriesName: 'The Avengers',
+      },
+      {
+        seriesName: 'Pokemon',
+      },
+      {
+        seriesName: 'My Little Pony',
+      },
     ],
     {});
   },

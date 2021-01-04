@@ -50,7 +50,6 @@ const FicResults = ({fics}) => {
     return (
         <div>
             {fics.map((fic) => {
-                console.log('FIC', fic);
             return(<p><NavLink key={fic.id} to={`/fics/${fic.id}`}>{fic.title}<br /></NavLink> Average Rating: {calculateAverage(fic)}</p>)}
     )}
 {/*
