@@ -19,11 +19,11 @@ const ShelfDetail = () => {
         dispatch(getOneShelf(shelfId));
       }, [dispatch, shelfId]);
 
-      useEffect(() => {
-        if (shelf) {
-            setShelfName(shelf.shelfName);
-        }
-    },[shelf.shelfName]);
+    //   useEffect(() => {
+    //     if (shelf) {
+    //         setShelfName(shelf.shelfName);
+    //     }
+    // },[shelf.shelfName]);
 
 
       const handleSubmit = async (e) => {
