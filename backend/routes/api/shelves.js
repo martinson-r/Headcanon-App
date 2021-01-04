@@ -29,7 +29,29 @@ router.get('/:id', restoreUser, asyncHandler(async(req, res) => {
     return res.json(fetchSingleShelf);
 }))
 
+router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
+    const { shelfName } = req.body;
+    const id = req.params.id;
+    const fetchSingleShelf = await FicShelf.findOne({
+        where: { id },
+    });
+    if (fetchSingleShelf) {
+        await fetchSingleShelf.update({
+            shelfName
+        });
+
+        const fetchShelf = await FicList.findAll({
+            where: { ficShelfId: id },
+             include: { model: Fic, through: [ListJoin], include: [Review, { model: Author, through: [AuthorList]}]}},
+        );
+        return res.json(fetchShelf);
+    }
+
+    return res.json(fetchSingleShelf);
+}))
+
 router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {
+    const { shelfName } = req.body;
     const id = req.params.id;
 
     const fetchShelf = await FicShelf.findOne({

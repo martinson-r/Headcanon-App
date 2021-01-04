@@ -1,7 +1,7 @@
 import { useParams, Link, useHistory} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getOneShelf, deleteShelf, getShelf } from "../../store/shelves";
+import { getOneShelf, deleteShelf, getShelf, editShelfName } from "../../store/shelves";
 import DeleteFicFromShelf from "../DeleteFicFromShelf";
 import UpdateReadStatus from "../UpdateReadStatus";
 import { calculateAverage } from "../../utils";
@@ -12,10 +12,18 @@ const ShelfDetail = () => {
     const { shelfId } = useParams();
     const shelf = useSelector(state => state.shelves[shelfId]);
     const fics = useSelector(state => state.shelves.ficlist[0]);
+    const [shelfName, setShelfName] = useState('');
+    const updateShelfName = (e) => setShelfName(e.target.value);
 
     useEffect(() => {
         dispatch(getOneShelf(shelfId));
       }, [dispatch, shelfId]);
+
+      useEffect(() => {
+        if (shelf) {
+            setShelfName(shelf.shelfName);
+        }
+    },[shelf]);
 
 
       const handleSubmit = async (e) => {
@@ -25,9 +33,23 @@ const ShelfDetail = () => {
         history.push("/");
     }
 
+    const changeShelfNameSubmit = async (e) => {
+        console.log('shelfName', shelfName);
+        e.preventDefault();
+        const payload = {shelfId, shelfName};
+        dispatch(editShelfName(payload));
+        history.push("/");
+    }
+
     if (!fics){
         return (
             <div>
+                 <form onSubmit={changeShelfNameSubmit}>
+                <p>Edit shelf name:</p>
+                <label htmlFor="changeShelfName">Change Shelf Name:</label>
+                <input type="text" value={shelfName} name="changeShelfName" onChange={updateShelfName}></input>
+                <button type="submit">Submit</button>
+            </form>
                 <p>It looks like there aren't any fics on this shelf! Better get going!</p>
                 <form onSubmit={handleSubmit}><button type="submit">Remove This Shelf</button></form>
             </div>
@@ -49,6 +71,12 @@ const ShelfDetail = () => {
 
     return (
         <div className="fics">
+            <form onSubmit={changeShelfNameSubmit}>
+                <p>Edit shelf name:</p>
+                <label htmlFor="changeShelfName">Change Shelf Name:</label>
+                <input type="text" value={shelfName} name="changeShelfName" onChange={updateShelfName}></input>
+                <button type="submit">Submit</button>
+            </form>
             <h2>FICS ON THIS SHELF</h2>
             <h2>{shelf.shelfName}</h2>
             <form onSubmit={handleSubmit}><button type="submit">Remove This Shelf</button></form>

@@ -82,6 +82,22 @@ const loadMainShelf = shelf => ({
               dispatch(remove(id));
 }
 
+
+export const editShelfName = (payload) => async dispatch => {
+  const { shelfName, shelfId } = payload;
+  const id = shelfId;
+
+  const response = await fetch(`/api/shelves/${id.toString()}/edit`, {
+      method: 'PUT',
+              headers: { "Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN') },
+              body: JSON.stringify({
+                shelfName
+              }),
+            });
+            const oneShelf = response.json();
+            dispatch(loadAllBooks(oneShelf));
+}
+
   export const editShelf = (data) => async dispatch => {
     const { ficId, shelfName } = data;
     const res = await fetch(`/api/fics/${ficId.toString()}/addtoshelf`, {
