@@ -46,8 +46,6 @@ router.put('/:id/edit', restoreUser, asyncHandler(async(req, res) => {
         );
         return res.json(fetchShelf);
     }
-
-    return res.json(fetchSingleShelf);
 }))
 
 router.delete('/:id', restoreUser, asyncHandler(async(req, res) => {

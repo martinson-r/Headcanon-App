@@ -1,5 +1,6 @@
 // import { fetch } from './csrf.js';
 import Cookies from 'js-cookie';
+import { fetch } from './csrf.js';
 
 const LOAD_REVIEW = "./reviews/LOAD_REVIEW";
 

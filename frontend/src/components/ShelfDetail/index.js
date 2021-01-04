@@ -23,7 +23,7 @@ const ShelfDetail = () => {
         if (shelf) {
             setShelfName(shelf.shelfName);
         }
-    },[shelf]);
+    },[shelf.shelfName]);
 
 
       const handleSubmit = async (e) => {
@@ -38,7 +38,6 @@ const ShelfDetail = () => {
         e.preventDefault();
         const payload = {shelfId, shelfName};
         dispatch(editShelfName(payload));
-        history.push("/");
     }
 
     if (!fics){
